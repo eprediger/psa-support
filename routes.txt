@@ -1,0 +1,76 @@
+/tickets -> GET:
+    devuelve:
+        {
+        "tickets": [
+            {
+            "descripcion": "descripcion del ticket",
+            "estado": "Nuevo",
+            "fecha_limite": "20/05/2010",
+            "fecha_ultima_actualizacion": "10/05/2011",
+            "id": 1,
+            "nombre": "ticket1",
+            "severidad": "Alta",
+            "tipo": "Nuevo"
+            },
+            {
+            "descripcion": "descripcion del ticket",
+            "estado": "Nuevo",
+            "fecha_limite": "20/05/2010",
+            "fecha_ultima_actualizacion": "10/05/2011",
+            "id": 2,
+            "nombre": "ticket1",
+            "severidad": "Alta",
+            "tipo": "Nuevo"
+            }
+        ]
+        }
+
+/tickets -> POST:
+    recibe:
+        {
+        "descripcion": "descripcion del ticket",
+        "estado": "Nuevo",
+        "fecha_limite": "20/05/2010",
+        "fecha_ultima_actualizacion": "10/05/2011",
+        "nombre": "ticket1",
+        "severidad": "Alta",
+        "tipo": "Nuevo"
+        }
+    devuelve:
+        {
+        "descripcion": "descripcion del ticket",
+        "estado": "Nuevo",
+        "fecha_limite": "20/05/2010",
+        "fecha_ultima_actualizacion": "10/05/2011",
+        "id": 1,
+        "nombre": "ticket1",
+        "severidad": "Alta",
+        "tipo": "Nuevo"
+        }
+
+/tickets/<id_ticket> -> PUT
+    recibe:
+        {
+        "descripcion": "descripcion del ticket",
+        "estado": "Nuevo",
+        "fecha_limite": "20/05/2010",
+        "fecha_ultima_actualizacion": "10/05/2011",
+        "nombre": "ticket1",
+        "severidad": "Alta",
+        "tipo": "Nuevo"
+        }
+    devuelve:
+        {
+        "descripcion": "descripcion del ticket",
+        "estado": "Nuevo",
+        "fecha_limite": "20/05/2010",
+        "fecha_ultima_actualizacion": "10/05/2011",
+        "id": 1,
+        "nombre": "ticket1",
+        "severidad": "Alta",
+        "tipo": "Nuevo"
+        }
+
+/tickets/<id_ticket> -> DELETE
+    devuelve:
+        {'mensaje': 'Ticket eliminado con exito!'}
