@@ -1,9 +1,9 @@
 from behave import given, when, then
 from app import create_app, setup_database
 
-app = create_app()
-setup_database(app)
-tc = app.test_client()
+#app = create_app()
+#setup_database(app)
+#tc = app.test_client()
 
 @given(u'The app is running')
 def step_impl(context):
@@ -13,7 +13,7 @@ def step_impl(context):
 @when(u'I ask to view all the tickets')
 def step_impl(context):
     print(u'STEP: When ask to view all the tickets')
-    resp = tc.get('/tickets')
+    resp = context.tc.get('/tickets')
     context.result = resp.get_json()['tickets']
 
 @then(u'I receive an empty list of tickets')
@@ -31,7 +31,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, fecha_creacion, fec
             'fecha_creacion': fecha_creacion,
             'fecha_ultima_actualizacion': fecha_ultima_actualizacion,
             'estado': estado}
-    resp = tc.post('/tickets', json=data)
+    resp = context.tc.post('/tickets', json=data)
     context.result = resp.get_json()['id']
 
 @then(u'I get the ticket with an id "{id}" of the database')
