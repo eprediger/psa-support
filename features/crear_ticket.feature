@@ -1,9 +1,26 @@
 Feature: Create a ticket
     """
-        Create a ticket
+        As a Analista de mesa de ayuda,
+        I want to create a ticket
+        to be able to register an issue from a client.
     """
 
-    Scenario: Success test for create tickets
-        Given The app is running
-        When I ask to create a ticket with nombre "ticketprueba", descripcion "descripcion prueba", tipo "ticketError", severidad "alta", fecha de creacion "29-05-2020", fecha de actualizacion "29-05-2020", estado "Nuevo"
-        Then I get the ticket with an id "1" of the database
+    Scenario: Success to create a ticket without estado
+        Given I am an Analista de mesa de ayuda
+        When I create a ticket with nombre "ticketBDD", descripcion "descripcion BDD", tipo "consulta", severidad "alta"
+        Then a ticket is created with estado "nuevo"
+
+    Scenario: Not success to create a ticket because of missing name
+        Given I am an Analista de mesa de ayuda
+        When I create a ticket with descripcion "descripcion BDD", tipo "consulta", severidad "alta"
+        Then I recive a warning because there is information that is missing 
+
+    Scenario: Not success to create a ticket because wrong severidad
+        Given I am an Analista de mesa de ayuda
+        When I create a ticket with nombre "ticketBDD", descripcion "descripcion BDD", tipo "consulta", severidad "mucha"
+        Then I recive a warning because there is a wrong value at severidad
+
+    Scenario: Not success to create a ticket because of wrong tipo
+        Given I am an Analista de mesa de ayuda
+        When I create a ticket with nombre "ticketBDD", descripcion "descripcion BDD", tipo "queja", severidad "baja"
+        Then I recive a warning because there is a wrong value at tipo

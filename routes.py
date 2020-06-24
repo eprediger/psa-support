@@ -27,7 +27,7 @@ def crear_ticket():
 		descripcion = data['descripcion']
 		tipo = data['tipo'].lower()
 		severidad = data['severidad'].lower()
-		pasos = data['pasos']
+#		pasos = data['pasos']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -45,7 +45,7 @@ def crear_ticket():
 
 	t = agregar_instancia(Ticket, nombre=nombre, descripcion=descripcion,
 						  tipo=tipo, severidad=severidad,
-						  fecha_creacion=fecha_creacion,
+						  fecha_creacion=fecha_creacion, 
 						  fecha_limite=fecha_limite,
 						  fecha_ultima_actualizacion=fecha_creacion,
 						  pasos=pasos)
