@@ -2,50 +2,60 @@
     devuelve:
         {
         "tickets": [
-            {
-            "descripcion": "descripcion del ticket",
-            "estado": "Nuevo",
-            "fecha_limite": "20/05/2010",
-            "fecha_ultima_actualizacion": "10/05/2011",
-            "id": 1,
-            "nombre": "ticket1",
-            "severidad": "Alta",
-            "tipo": "Nuevo"
-            },
-            {
-            "descripcion": "descripcion del ticket",
-            "estado": "Nuevo",
-            "fecha_limite": "20/05/2010",
-            "fecha_ultima_actualizacion": "10/05/2011",
-            "id": 2,
-            "nombre": "ticket1",
-            "severidad": "Alta",
-            "tipo": "Nuevo"
-            }
+                {
+                "descripcion": "descripcion del ticke2323t",
+                "estado": "Nuevo",
+                "fecha_creacion": "Wed, 24 Jun 2020 16:57:39 GMT",
+                "fecha_finalizacion": null,
+                "fecha_limite": "Wed, 01 Jul 2020 16:57:39 GMT",
+                "fecha_ultima_actualizacion": "Wed, 24 Jun 2020 16:57:39 GMT",
+                "id": 1,
+                "nombre": "ticket14",
+                "responsable": null,
+                "severidad": "Alta",
+                "tipo": "Error",
+                "pasos": "asdasd",
+                },
+                {
+                "descripcion": "descripcion del ticke2323t",
+                "estado": "Nuevo",
+                "fecha_creacion": "Wed, 24 Jun 2020 16:58:55 GMT",
+                "fecha_finalizacion": null,
+                "fecha_limite": "Wed, 01 Jul 2020 16:58:55 GMT",
+                "fecha_ultima_actualizacion": "Wed, 24 Jun 2020 16:58:55 GMT",
+                "id": 2,
+                "nombre": "ticket14",
+                "responsable": null,
+                "severidad": "Alta",
+                "tipo": "Consulta",
+                "pasos": null,
+                }
         ]
         }
 
 /tickets -> POST:
     recibe:
         {
-        "descripcion": "descripcion del ticket",
-        "estado": "Nuevo",
-        "fecha_limite": "20/05/2010",
-        "fecha_ultima_actualizacion": "10/05/2011",
-        "nombre": "ticket1",
+        "nombre": "ticket14",
+        "descripcion": "descripcion del ticke2323t",
+        "tipo": "Error",
         "severidad": "Alta",
-        "tipo": "Nuevo"
+        "pasos": "asdassda"
         }
     devuelve:
         {
-        "descripcion": "descripcion del ticket",
+        "descripcion": "descripcion del ticke2323t",
         "estado": "Nuevo",
-        "fecha_limite": "20/05/2010",
-        "fecha_ultima_actualizacion": "10/05/2011",
-        "id": 1,
-        "nombre": "ticket1",
+        "fecha_creacion": "Wed, 24 Jun 2020 16:58:55 GMT",
+        "fecha_finalizacion": null,
+        "fecha_limite": "Wed, 01 Jul 2020 16:58:55 GMT",
+        "fecha_ultima_actualizacion": "Wed, 24 Jun 2020 16:58:55 GMT",
+        "id": 2,
+        "nombre": "ticket14",
+        "responsable": null,
         "severidad": "Alta",
-        "tipo": "Nuevo"
+        "tipo": "Error",
+        "pasos": "asdassda"
         }
 
 /tickets/<id_ticket> -> PUT
@@ -57,19 +67,11 @@
         "fecha_ultima_actualizacion": "10/05/2011",
         "nombre": "ticket1",
         "severidad": "Alta",
-        "tipo": "Nuevo"
+        "tipo": "consulta",
+        "pasos": null
         }
     devuelve:
-        {
-        "descripcion": "descripcion del ticket",
-        "estado": "Nuevo",
-        "fecha_limite": "20/05/2010",
-        "fecha_ultima_actualizacion": "10/05/2011",
-        "id": 1,
-        "nombre": "ticket1",
-        "severidad": "Alta",
-        "tipo": "Nuevo"
-        }
+        {'mensaje': 'Ticket actualizado con exito!'}
 
 /tickets/<id_ticket> -> DELETE
     devuelve:
