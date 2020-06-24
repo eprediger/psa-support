@@ -27,6 +27,7 @@ def crear_ticket():
 		descripcion = data['descripcion']
 		tipo = data['tipo'].lower()
 		severidad = data['severidad'].lower()
+		pasos = data['pasos']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -35,6 +36,9 @@ def crear_ticket():
 	
 	if tipo not in ['error', 'consulta', 'mejora']:
 		return jsonify({'mensaje': 'El tipo de ticket debe ser Error/Consulta/Mejora'}), CODIGO_HTTP_BAD_REQUEST
+	
+	if tipo != 'error':
+		pasos = None
 
 	fecha_creacion = datetime.now(timezone('America/Argentina/Buenos_Aires'))
 	fecha_limite = fecha_creacion + timedelta(days=SEVERIDADES[severidad])
@@ -43,7 +47,8 @@ def crear_ticket():
 						  tipo=tipo, severidad=severidad,
 						  fecha_creacion=fecha_creacion,
 						  fecha_limite=fecha_limite,
-						  fecha_ultima_actualizacion=fecha_creacion)
+						  fecha_ultima_actualizacion=fecha_creacion,
+						  pasos=pasos)
 	ticket_diccionario = t.a_diccionario()
 
 	return jsonify(ticket_diccionario), CODIGO_HTTP_OK
@@ -59,6 +64,7 @@ def editar_ticket(id_ticket):
 		estado = data['estado'].lower()
 		severidad = data['severidad'].lower()
 		responsable = data['responsable']
+		pasos = data['pasos']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -81,12 +87,17 @@ def editar_ticket(id_ticket):
 	else:
 		fecha_finalizacion = None
 
+	if tipo != 'error':
+		# Solo los tickets de tipo error llevan pasos
+		pasos = None
+
 	editar_instancia(Ticket, id_ticket, nombre=nombre, descripcion=descripcion,
 						  tipo=tipo, estado=estado, severidad=severidad,
 						  fecha_ultima_actualizacion=fecha_ultima_actualizacion,
 						  fecha_limite=fecha_limite,
 						  fecha_finalizacion=fecha_finalizacion,
-						  responsable=responsable)
+						  responsable=responsable,
+						  pasos=pasos)
 
 	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
 
