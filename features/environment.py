@@ -5,7 +5,7 @@ from app import create_app, setup_database
 import os
 import tempfile
 
-def before_feature(context, feature):
+def before_scenario(context, feature):
     # -- HINT: Recreate a new flaskr client before each feature is executed.
     app = create_app()
     #context.db, app.config['DATABASE'] = tempfile.mkstemp()

@@ -70,13 +70,26 @@ def editar_ticket(id_ticket):
 
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
 	
+	if ticket.estado.lower() == 'cerrado':
+		return jsonify({'mensaje': 'El ticket ya fue cerrado previamente'}), CODIGO_HTTP_BAD_REQUEST
+
 	if not ticket:
 		return jsonify({'mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
 	
+	if severidad not in SEVERIDADES.keys():
+		return jsonify({'mensaje': 'La severidad debe ser Alta, Media o Baja'}), CODIGO_HTTP_BAD_REQUEST
+	
+	if tipo not in ['error', 'consulta', 'mejora']:
+		return jsonify({'mensaje': 'El tipo de ticket debe ser Error/Consulta/Mejora'}), CODIGO_HTTP_BAD_REQUEST
+
+	if estado not in ['nuevo', 'asignado', 'cerrado']:
+		return jsonify({'mensaje': 'El estado de ticket debe ser Nuevo/Asignado/Cerrado'}), CODIGO_HTTP_BAD_REQUEST
+
 	fecha_ultima_actualizacion = datetime.now(timezone('America/Argentina/Buenos_Aires'))
 
 	if severidad != ticket.severidad:
 		# Si cambiaron la severidad del ticket, se actualiza la fecha limite.
+		print('modificando fecha limite')
 		fecha_limite = ticket.fecha_creacion + timedelta(days=SEVERIDADES[severidad.lower()])
 	else:
 		fecha_limite = ticket.fecha_limite

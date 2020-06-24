@@ -26,6 +26,23 @@ class Ticket(db.Model):
     def a_diccionario(self):
         ''' Retorna el diccionario de la instancia 
         '''
+        if self.fecha_limite:
+            fecha_limite = self.fecha_limite.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            fecha_limite = None
+        if self.fecha_creacion:
+            fecha_creacion = self.fecha_creacion.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            fecha_creacion = None
+        if self.fecha_finalizacion:
+            fecha_finalizacion = self.fecha_finalizacion.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            fecha_finalizacion = None
+        if self.fecha_ultima_actualizacion:
+            fecha_actualizacion = self.fecha_ultima_actualizacion.strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            fecha_actualizacion = None
+
         d = {
             'id': self.id,
             'nombre': self.nombre,
@@ -35,9 +52,9 @@ class Ticket(db.Model):
             'severidad': self.severidad,
             'pasos': self.pasos,
             'responsable': self.responsable,
-            'fecha_creacion': self.fecha_creacion,
-            'fecha_limite': self.fecha_limite,
-            'fecha_finalizacion': self.fecha_finalizacion,
-            'fecha_ultima_actualizacion': self.fecha_ultima_actualizacion
+            'fecha_creacion': fecha_creacion,
+            'fecha_limite': fecha_limite,
+            'fecha_finalizacion': fecha_finalizacion,
+            'fecha_ultima_actualizacion': fecha_actualizacion
         }
         return d
