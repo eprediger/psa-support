@@ -122,5 +122,8 @@ def archivar_ticket(id_ticket):
 	if not ticket:
 		return jsonify({'mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
 
+	if ticket.estado.lower() != 'cerrado':
+		return jsonify({'mensaje': 'Los tickets deben estar cerrados para poder archivarse!'}), CODIGO_HTTP_BAD_REQUEST
+
 	eliminar_instancia(Ticket, id=id_ticket)
-	return jsonify({'mensaje': 'Ticket eliminado con exito!'}), CODIGO_HTTP_OK
+	return jsonify({'mensaje': 'Ticket archivado con exito!'}), CODIGO_HTTP_OK
