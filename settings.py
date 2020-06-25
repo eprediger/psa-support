@@ -1,3 +1,9 @@
 CODIGO_HTTP_OK = 200
 CODIGO_HTTP_NOT_FOUND = 404
 CODIGO_HTTP_BAD_REQUEST = 400
+
+SEVERIDADES = {
+    'alta': 7,
+    'media': 30,
+    'baja': 90
+}
