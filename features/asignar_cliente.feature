@@ -1,7 +1,7 @@
 Feature: Asign client to a ticket
     """
         As an Analista de mesa de ayuda,
-        I want to asign a client to a tocket
+        I want to asign a client to a ticket
         to be able to know who generated that ticket.
     """
 
