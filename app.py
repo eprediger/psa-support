@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def create_app():
 #	app.config['DEBUG'] = True
-	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/database.db'
+	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 	db.init_app(app)
 	app.register_blueprint(tickets)
