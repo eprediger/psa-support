@@ -1,6 +1,6 @@
 Feature: Create a ticket
     """
-        As a Analista de mesa de ayuda,
+        As an Analista de mesa de ayuda,
         I want to create a ticket
         to be able to register an issue from a client.
     """

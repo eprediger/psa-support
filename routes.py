@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from models import Ticket
+from models import Ticket, Cliente
 from flask.blueprints import Blueprint
 from settings import CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NOT_FOUND,\
 					 CODIGO_HTTP_OK, SEVERIDADES
@@ -10,6 +10,7 @@ from pytz import timezone
 
 
 tickets = Blueprint('tickets', __name__)
+clientes = Blueprint('clientes', __name__)
 
 
 @tickets.route('/tickets', methods=['GET'])
@@ -56,6 +57,7 @@ def crear_ticket():
 
 @tickets.route('/tickets/<int:id_ticket>', methods=['PUT'])
 def editar_ticket(id_ticket):
+	cliente_no_asignado = 0
 	try:
 		data = request.get_json()
 		nombre = data['nombre']
@@ -67,6 +69,11 @@ def editar_ticket(id_ticket):
 		pasos = data['pasos']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
+	
+	try:
+		cliente_asignado = data['cliente_asignado']
+	except:
+		cliente_no_asignado = 1		
 
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
 	
@@ -104,16 +111,36 @@ def editar_ticket(id_ticket):
 		# Solo los tickets de tipo error llevan pasos
 		pasos = None
 
-	editar_instancia(Ticket, id_ticket, nombre=nombre, descripcion=descripcion,
-						  tipo=tipo, estado=estado, severidad=severidad,
-						  fecha_ultima_actualizacion=fecha_ultima_actualizacion,
-						  fecha_limite=fecha_limite,
-						  fecha_finalizacion=fecha_finalizacion,
-						  responsable=responsable,
-						  pasos=pasos)
+	if(cliente_no_asignado):
+		editar_instancia(Ticket, id_ticket, nombre=nombre, descripcion=descripcion,
+							tipo=tipo, estado=estado, severidad=severidad,
+							fecha_ultima_actualizacion=fecha_ultima_actualizacion,
+							fecha_limite=fecha_limite,
+							fecha_finalizacion=fecha_finalizacion,
+							responsable=responsable,
+							pasos=pasos)
+	else:
+		editar_instancia(Ticket, id_ticket, nombre=nombre, descripcion=descripcion,
+							tipo=tipo, estado=estado, severidad=severidad,
+							fecha_ultima_actualizacion=fecha_ultima_actualizacion,
+							fecha_limite=fecha_limite,
+							fecha_finalizacion=fecha_finalizacion,
+							responsable=responsable,
+							pasos=pasos,
+							cliente_asignado=cliente_asignado)	
 
 	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
 
+# def agregar_cliente_en_ticket(id_ticket):
+# 	try:
+# 		data = request.get_json()
+# 		nombre_cliente = data['nombre_cliente']	
+# 	except:
+# 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
+
+# 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
+# 	editar_instancia(Ticket, id_ticket, cliente_asignado = nombre_cliente)
+# 	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
 
 @tickets.route('/tickets/<int:id_ticket>', methods=['DELETE'])
 def archivar_ticket(id_ticket):
@@ -127,3 +154,30 @@ def archivar_ticket(id_ticket):
 
 	eliminar_instancia(Ticket, id=id_ticket)
 	return jsonify({'mensaje': 'Ticket archivado con exito!'}), CODIGO_HTTP_OK
+
+@clientes.route('/clientes', methods=['GET'])
+def obtener_clientes():
+	clientes = Cliente.query.all()
+	todos_los_clientes = [c.a_diccionario() for c in clientes]
+	return jsonify({'clientes': todos_los_clientes}), CODIGO_HTTP_OK
+
+
+@clientes.route('/clientes', methods=['POST'])
+def crear_cliente():
+	try:
+		data = request.get_json()
+		razon_social = data['razon_social']
+		descripcion = data['descripcion']
+		CUIT = data['CUIT']
+		fecha_desde_que_es_cliente = data['fecha_desde_que_es_cliente']
+	except:
+		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
+
+	c = agregar_instancia(Cliente, 
+						razon_social=razon_social, 
+						descripcion=descripcion,
+						CUIT=CUIT,
+						fecha_desde_que_es_cliente=fecha_desde_que_es_cliente)
+	cliente_diccionario = c.a_diccionario()
+
+	return jsonify(cliente_diccionario), CODIGO_HTTP_OK

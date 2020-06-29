@@ -22,6 +22,7 @@ class Ticket(db.Model):
     fecha_limite = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_finalizacion = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_ultima_actualizacion = db.Column(db.DateTime(timezone=True), nullable=True)
+    cliente_asignado = db.Column(db.String(150), nullable=True)
 
     def a_diccionario(self):
         ''' Retorna el diccionario de la instancia 
@@ -55,6 +56,30 @@ class Ticket(db.Model):
             'fecha_creacion': fecha_creacion,
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,
-            'fecha_ultima_actualizacion': fecha_actualizacion
+            'fecha_ultima_actualizacion': fecha_actualizacion,
+            'cliente_asignado' : self.cliente_asignado
+        }
+        return d
+
+class Cliente(db.Model):
+    """Clase que define la tabla Cliente
+    """
+    __tablename__ = 'cliente'
+    id = db.Column(db.Integer, primary_key=True)
+    razon_social = db.Column(db.String(150), nullable=False)
+    CUIT = db.Column(db.String(300), nullable=False)
+    descripcion = db.Column(db.String(300), nullable=False)
+#    fecha_desde_que_es_cliente = db.Column(db.DateTime(timezone=True), nullable=False)
+    fecha_desde_que_es_cliente = db.Column(db.String(300), nullable=False)
+
+    def a_diccionario(self):
+        ''' Retorna el diccionario de la instancia 
+        '''
+        d = {
+            'id': self.id,
+            'razon_social': self.razon_social,
+            'CUIT': self.CUIT,
+            'descripcion': self.descripcion,
+            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente
         }
         return d
