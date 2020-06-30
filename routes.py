@@ -131,17 +131,6 @@ def editar_ticket(id_ticket):
 
 	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
 
-# def agregar_cliente_en_ticket(id_ticket):
-# 	try:
-# 		data = request.get_json()
-# 		nombre_cliente = data['nombre_cliente']	
-# 	except:
-# 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
-
-# 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
-# 	editar_instancia(Ticket, id_ticket, cliente_asignado = nombre_cliente)
-# 	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
-
 @tickets.route('/tickets/<int:id_ticket>', methods=['DELETE'])
 def archivar_ticket(id_ticket):
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
