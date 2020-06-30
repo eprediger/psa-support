@@ -28,18 +28,19 @@ def crear_ticket():
 		descripcion = data['descripcion']
 		tipo = data['tipo'].lower()
 		severidad = data['severidad'].lower()
-#		pasos = data['pasos']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
+	
+	try:
+		pasos = data['pasos']
+	except:
+		pasos = None
 
 	if severidad not in SEVERIDADES.keys():
 		return jsonify({'mensaje': 'La severidad debe ser Alta, Media o Baja'}), CODIGO_HTTP_BAD_REQUEST
 	
 	if tipo not in ['error', 'consulta', 'mejora']:
 		return jsonify({'mensaje': 'El tipo de ticket debe ser Error/Consulta/Mejora'}), CODIGO_HTTP_BAD_REQUEST
-	
-	if tipo != 'error':
-		pasos = None
 
 	fecha_creacion = datetime.now(timezone('America/Argentina/Buenos_Aires'))
 	fecha_limite = fecha_creacion + timedelta(days=SEVERIDADES[severidad])
@@ -66,10 +67,14 @@ def editar_ticket(id_ticket):
 		estado = data['estado'].lower()
 		severidad = data['severidad'].lower()
 		responsable = data['responsable']
-		pasos = data['pasos']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 	
+	try:
+		pasos = data['pasos']
+	except:
+		pasos = None
+
 	try:
 		cliente_asignado = data['cliente_asignado']
 	except:
@@ -77,8 +82,12 @@ def editar_ticket(id_ticket):
 
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
 	
-	if ticket.estado.lower() == 'cerrado':
-		return jsonify({'mensaje': 'El ticket ya fue cerrado previamente'}), CODIGO_HTTP_BAD_REQUEST
+	if not ticket:
+		return jsonify({'Mensaje': 'No existe el ticket solicitado'}), 404
+
+	if ticket.estado:
+		if ticket.estado.lower() == 'cerrado':
+			return jsonify({'mensaje': 'El ticket ya fue cerrado previamente'}), CODIGO_HTTP_BAD_REQUEST
 
 	if not ticket:
 		return jsonify({'mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
