@@ -15,7 +15,8 @@ def step_impl(context):
 
 def before_scenario(context, feature):
     # -- HINT: Recreate a new flaskr client before each feature is executed.
-    app = create_app()
+    app = create_app(False)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
     #context.db, app.config['DATABASE'] = tempfile.mkstemp()
     app.testing = True
     context.tc = app.test_client()
