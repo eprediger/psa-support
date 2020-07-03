@@ -8,7 +8,6 @@ ticket_crear = {
     'descripcion': 'test',
     'severidad': 'alta',
     'tipo': 'consulta',
-    'pasos': None
 }
 
 cliente_a_asignar = {
@@ -27,17 +26,17 @@ def step_impl(context):
 
 @when(u'I asign the client to the ticket')
 def step_impl(context):
-    cliente = context.tc.get('/clientes').get_json()['clientes'][0]['razon_social']
+    cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id_cliente']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['cliente_asignado'] = cliente
+    ticket['id_cliente'] = cliente
     resp = context.tc.put('/tickets/1', json=ticket)
     context.result = resp
 
 
 @then(u'I can see the name of the client asigned to the ticket')
 def step_impl(context):
-    print(context.tc.get('/tickets').get_json()['tickets'][0]['cliente_asignado'])
-    assert context.tc.get('/tickets').get_json()['tickets'][0]['cliente_asignado'] == "Test S.A."
+    print(context.tc.get('/tickets').get_json()['tickets'][0]['cliente'])
+    assert context.tc.get('/tickets').get_json()['tickets'][0]['cliente']['razon_social'] == "Test S.A."
 
 @given(u'I have a ticket')
 def step_impl(context):

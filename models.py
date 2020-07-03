@@ -25,8 +25,8 @@ class Ticket(db.Model):
     
     # Foreigns and relations
     id_cliente = db.Column(db.Integer(),
-                           db.ForeignKey('cliente.id'),
-                           nullable=False)
+                           db.ForeignKey('cliente.id_cliente'),
+                           nullable=True)
     cliente = db.relationship('Cliente', backref='cliente')
 
     def a_diccionario(self):
@@ -48,6 +48,10 @@ class Ticket(db.Model):
             fecha_actualizacion = self.fecha_ultima_actualizacion.strftime('%Y-%m-%d %H:%M:%S')
         else:
             fecha_actualizacion = None
+        if self.id_cliente:
+            cliente = self.cliente.a_diccionario()
+        else:
+            cliente = None
 
         d = {
             'id': self.id,
@@ -62,7 +66,7 @@ class Ticket(db.Model):
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,
             'fecha_ultima_actualizacion': fecha_actualizacion,
-            'cliente_asignado' : self.cliente.a_diccionario()
+            'cliente' : cliente
         }
         return d
 
@@ -70,7 +74,7 @@ class Cliente(db.Model):
     """Clase que define la tabla Cliente
     """
     __tablename__ = 'cliente'
-    id = db.Column(db.Integer, primary_key=True)
+    id_cliente = db.Column(db.Integer, primary_key=True)
     razon_social = db.Column(db.String(150), nullable=False)
     CUIT = db.Column(db.String(300), nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
@@ -81,7 +85,7 @@ class Cliente(db.Model):
         ''' Retorna el diccionario de la instancia 
         '''
         d = {
-            'id': self.id,
+            'id_cliente': self.id_cliente,
             'razon_social': self.razon_social,
             'CUIT': self.CUIT,
             'descripcion': self.descripcion,

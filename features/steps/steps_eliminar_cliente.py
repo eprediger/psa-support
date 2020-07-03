@@ -23,20 +23,20 @@ cliente_a_asignar = {
 def step_impl(context):
     context.tc.post('/tickets', json = ticket_crear)
     context.tc.post('/clientes', json = cliente_a_asignar)
-    cliente = context.tc.get('/clientes').get_json()['clientes'][0]['razon_social']
+    cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id_cliente']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['cliente_asignado'] = cliente
+    ticket['id_cliente'] = cliente
     context.tc.put('/tickets/1', json=ticket)
 
 
 @when(u'I delete the client of the ticket')
 def step_impl(context):
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['cliente_asignado'] = None
+    ticket['id_cliente'] = None
     context.tc.put('/tickets/1', json=ticket)
 
 
 @then(u'I can see that the ticket has no client asigned')
 def step_impl(context):
     resp = context.tc.get('/tickets').get_json()['tickets'][0]
-    assert resp['cliente_asignado'] == None
+    assert resp['cliente'] == None

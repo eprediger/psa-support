@@ -9,7 +9,6 @@ data_crear = {
     'descripcion': 'test',
     'severidad': 'alta',
     'tipo': 'consulta',
-    'pasos': None
 }
 
 data_editar = {
@@ -35,4 +34,5 @@ def step_impl(context):
 def step_impl(context):
     resp = context.tc.post('/tickets', json=data_crear)
     resp = context.tc.delete('/tickets/1')
+    print(resp.get_json())
     context.result = resp.get_json()['mensaje']

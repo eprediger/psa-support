@@ -12,7 +12,6 @@ data_crear = {
     'descripcion': 'test',
     'severidad': 'alta',
     'tipo': 'consulta',
-    'pasos': None
 }
 
 data_editar = {

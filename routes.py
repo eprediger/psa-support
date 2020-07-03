@@ -58,7 +58,6 @@ def crear_ticket():
 
 @tickets.route('/tickets/<int:id_ticket>', methods=['PUT'])
 def editar_ticket(id_ticket):
-	cliente_no_asignado = 0
 	try:
 		data = request.get_json()
 		nombre = data['nombre']
@@ -71,14 +70,14 @@ def editar_ticket(id_ticket):
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 	
 	try:
+		id_cliente = data['id_cliente']
+	except:
+		id_cliente = None
+
+	try:
 		pasos = data['pasos']
 	except:
 		pasos = None
-
-	try:
-		cliente_asignado = data['cliente_asignado']
-	except:
-		cliente_no_asignado = 1		
 
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
 	
@@ -120,23 +119,14 @@ def editar_ticket(id_ticket):
 		# Solo los tickets de tipo error llevan pasos
 		pasos = None
 
-	if(cliente_no_asignado):
-		editar_instancia(Ticket, id_ticket, nombre=nombre, descripcion=descripcion,
-							tipo=tipo, estado=estado, severidad=severidad,
-							fecha_ultima_actualizacion=fecha_ultima_actualizacion,
-							fecha_limite=fecha_limite,
-							fecha_finalizacion=fecha_finalizacion,
-							responsable=responsable,
-							pasos=pasos)
-	else:
-		editar_instancia(Ticket, id_ticket, nombre=nombre, descripcion=descripcion,
-							tipo=tipo, estado=estado, severidad=severidad,
-							fecha_ultima_actualizacion=fecha_ultima_actualizacion,
-							fecha_limite=fecha_limite,
-							fecha_finalizacion=fecha_finalizacion,
-							responsable=responsable,
-							pasos=pasos,
-							cliente_asignado=cliente_asignado)	
+	editar_instancia(Ticket, id_ticket, nombre=nombre, descripcion=descripcion,
+						tipo=tipo, estado=estado, severidad=severidad,
+						fecha_ultima_actualizacion=fecha_ultima_actualizacion,
+						fecha_limite=fecha_limite,
+						fecha_finalizacion=fecha_finalizacion,
+						responsable=responsable,
+						pasos=pasos,
+						id_cliente=id_cliente)	
 
 	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
 

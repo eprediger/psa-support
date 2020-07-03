@@ -5,23 +5,21 @@ from settings import SEVERIDADES
 
 ticket_crear = {
     'nombre': 'test',
-    'descripcion': 'test',
+    'descripcion': 'test de descripcion',
     'severidad': 'alta',
     'tipo': 'consulta',
-    'pasos': None,
-    'cliente_asignado' : 'Cliente Inicial'
 }
 
 cliente_a_asignar = {
-    "descripcion": "Area logistica de Test",
-    "razon_social": "Cliente Asignado Test S.A.",
-    "CUIT": "33-654321-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT"
+    "descripcion": "Area logistica de Test1",
+    "razon_social": "Cliente Asignado Test1 S.A.",
+    "CUIT": "12-456-5",
+    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2016 16:58:55 GMT"
 }
 
 cliente_a_modificar = {
-    "descripcion": "Area logistica de Test",
-    "razon_social": "Test S.A.",
+    "descripcion": "Area logistica de Test2",
+    "razon_social": "Test2 S.A.",
     "CUIT": "33-654321-5",
     "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT"
 }
@@ -31,23 +29,23 @@ def step_impl(context):
     context.tc.post('/tickets', json = ticket_crear)
     context.tc.post('/clientes', json = cliente_a_asignar)
     context.tc.post('/clientes', json = cliente_a_modificar)
-    cliente = context.tc.get('/clientes').get_json()['clientes'][0]['razon_social']
+    id_cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id_cliente']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['cliente_asignado'] = cliente
+    ticket['id_cliente'] = id_cliente
     context.tc.put('/tickets/1', json=ticket)
 
 
 @when(u'I modify the client of the ticket')
 def step_impl(context):
-    cliente = context.tc.get('/clientes').get_json()['clientes'][1]['razon_social']
+    id_cliente = context.tc.get('/clientes').get_json()['clientes'][1]['id_cliente']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['cliente_asignado'] = cliente
+    ticket['id_cliente'] = id_cliente
     context.tc.put('/tickets/1', json=ticket)
 
 
 @then(u'I can see the name of the new client asigned to the ticket')
 def step_impl(context):
-    assert context.tc.get('/tickets').get_json()['tickets'][0]['cliente_asignado'] == "Test S.A."
+    assert context.tc.get('/tickets').get_json()['tickets'][0]['cliente']['razon_social'] == "Test2 S.A."
 
 @given(u'I ticket that already has a client loaded')
 def step_impl(context):
