@@ -5,7 +5,6 @@ from database import db
 app = Flask(__name__)
 
 def create_app(dev=True):
-
 	app.config['DEBUG'] = dev
 	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True

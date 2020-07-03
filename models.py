@@ -22,7 +22,12 @@ class Ticket(db.Model):
     fecha_limite = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_finalizacion = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_ultima_actualizacion = db.Column(db.DateTime(timezone=True), nullable=True)
-    cliente_asignado = db.Column(db.String(150), nullable=True)
+    
+    # Foreigns and relations
+    id_cliente = db.Column(db.Integer(),
+                           db.ForeignKey('cliente.id'),
+                           nullable=False)
+    cliente = db.relationship('Cliente', backref='cliente')
 
     def a_diccionario(self):
         ''' Retorna el diccionario de la instancia 
@@ -57,7 +62,7 @@ class Ticket(db.Model):
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,
             'fecha_ultima_actualizacion': fecha_actualizacion,
-            'cliente_asignado' : self.cliente_asignado
+            'cliente_asignado' : self.cliente.a_diccionario()
         }
         return d
 
