@@ -161,6 +161,10 @@ def crear_cliente():
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
+	for d in data:
+		if data[d] == None:
+			return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
+
 	c = agregar_instancia(Cliente, 
 						razon_social=razon_social, 
 						descripcion=descripcion,
