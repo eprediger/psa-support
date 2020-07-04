@@ -29,13 +29,13 @@ def step_impl(context):
     context.tc.post('/tickets', json = ticket_crear)
     context.tc.post('/clientes', json = cliente_a_asignar)
     context.tc.post('/clientes', json = cliente_a_modificar)
-    id = context.tc.get('/clientes').get_json()['clientes'][0]['id']
+    id_cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['id'] = id
+    ticket['id_cliente'] = id_cliente
     context.tc.put('/tickets/1', json=ticket)
 
 
-@when(u'I modify the client of the ticket')
+@when(u'I change the client of the ticket')
 def step_impl(context):
     id_cliente = context.tc.get('/clientes').get_json()['clientes'][1]['id']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
@@ -55,7 +55,7 @@ def step_impl(context):
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
     ticket['cliente_asignado'] = cliente
 
-@when(u'I modify the client of the ticket with another that doesnt exist')
+@when(u'I change the client of the ticket with another that doesnt exist')
 def step_impl(context):
     cliente = {}
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
