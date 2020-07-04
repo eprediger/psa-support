@@ -34,6 +34,8 @@ python app.py
 
 ### Despliegue
 
+Vincular reposito a heroku: `heroku git:remote -a psa-api-support`
+
 ```
 git push heroku master
 ```
