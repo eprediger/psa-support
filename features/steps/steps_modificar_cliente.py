@@ -46,7 +46,7 @@ def step_impl(context):
     resp = context.tc.put('/clientes/1', json=data)
     context.result = resp.get_json()['mensaje']
 
-@then(u'I can see a cliente asigned the the ticket With CUIT "654321" and the rest of its atributes modified.')
+@then(u'I can see the cliente asigned to the ticket With CUIT "654321" and the rest of its atributes modified.')
 def step_impl(context):
     resp = context.tc.get('/tickets').get_json()['tickets'][0]['cliente']
     print(resp)

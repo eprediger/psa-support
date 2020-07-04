@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from database import db
+from database import db, editar_instancia
 
 
 class Ticket(db.Model):
@@ -49,6 +49,7 @@ class Ticket(db.Model):
         else:
             fecha_actualizacion = None
         if self.id_cliente:
+            editar_instancia(Cliente, self.id_cliente, asignado = True)
             cliente = self.cliente.a_diccionario()
         else:
             cliente = None
@@ -80,15 +81,18 @@ class Cliente(db.Model):
     descripcion = db.Column(db.String(300), nullable=False)
 #    fecha_desde_que_es_cliente = db.Column(db.DateTime(timezone=True), nullable=False)
     fecha_desde_que_es_cliente = db.Column(db.String(300), nullable=False)
+    asignado = db.Column(db.Boolean, default=False, nullable=True)
 
     def a_diccionario(self):
         ''' Retorna el diccionario de la instancia 
+
         '''
         d = {
             'id': self.id,
             'razon_social': self.razon_social,
             'CUIT': self.CUIT,
             'descripcion': self.descripcion,
-            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente
+            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente,
+            'asignado': self.asignado
         }
         return d
