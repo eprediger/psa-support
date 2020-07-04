@@ -26,9 +26,9 @@ def step_impl(context):
 
 @when(u'I asign the client to the ticket')
 def step_impl(context):
-    cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id_cliente']
+    id_cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['id_cliente'] = cliente
+    ticket['id_cliente'] = id_cliente
     resp = context.tc.put('/tickets/1', json=ticket)
     context.result = resp
 

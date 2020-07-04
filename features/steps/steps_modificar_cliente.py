@@ -3,62 +3,45 @@ from app import create_app, setup_database
 from datetime import datetime, timedelta
 from settings import SEVERIDADES
 
-ticket_crear = {
-    'nombre': 'test',
-    'descripcion': 'test de descripcion',
-    'severidad': 'alta',
-    'tipo': 'consulta',
+cliente_creado = {
+    'razon_social' : "razon social prueba",
+    'CUIT' : "123456",
+    'descripcion' : "descripcion prueba",
+    'fecha_desde_que_es_cliente' : "12022020"
 }
 
-cliente_a_asignar = {
-    "descripcion": "Area logistica de Test1",
-    "razon_social": "Cliente Asignado Test1 S.A.",
-    "CUIT": "12-456-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2016 16:58:55 GMT"
+modificaciones_cliente = {
+    'razon_social' : "razon social 2",
+    'CUIT' : "654321",
+    'descripcion' : "descripcion modificada",
+    'fecha_desde_que_es_cliente' : "123123123"
 }
 
-cliente_a_modificar = {
-    "descripcion": "Area logistica de Test2",
-    "razon_social": "Test2 S.A.",
-    "CUIT": "33-654321-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT"
-}
 
-@given(u'I have a client and a ticket that already has a client loaded')
+@given(u'I am an Analista de mesa de ayuda and i have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba", fecha desde que es cliente:"12022020"')
 def step_impl(context):
-    context.tc.post('/tickets', json = ticket_crear)
-    context.tc.post('/clientes', json = cliente_a_asignar)
-    context.tc.post('/clientes', json = cliente_a_modificar)
-    id_cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id_cliente']
-    ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['id_cliente'] = id_cliente
-    context.tc.put('/tickets/1', json=ticket)
+    context.tc.post('/clientes', json=cliente_creado)
 
 
-@when(u'I modify the client of the ticket')
+@when(u'I modify the razon social por "razon social 2", CUIT:"654321", descripcion: "descripcion modificada" y fecha desde que es cliente por "123123123"')
 def step_impl(context):
-    id_cliente = context.tc.get('/clientes').get_json()['clientes'][1]['id_cliente']
-    ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['id_cliente'] = id_cliente
-    context.tc.put('/tickets/1', json=ticket)
+    context.tc.put('/clientes/1', json=modificaciones_cliente)
+    
 
 
-@then(u'I can see the name of the new client asigned to the ticket')
+@then(u'I can see a cliente With CUIT "{CUIT}" and the rest of its atributes modified.')
+def step_impl(context, CUIT):
+    resp =  context.tc.get('/clientes').get_json()['clientes'][0]['CUIT']
+    print(resp)
+    assert resp == CUIT
+
+@when(u'I modify the razon social por "", CUIT:"", descripcion: "" y fecha desde que es cliente por ""')
 def step_impl(context):
-    assert context.tc.get('/tickets').get_json()['tickets'][0]['cliente']['razon_social'] == "Test2 S.A."
-
-@given(u'I ticket that already has a client loaded')
-def step_impl(context):
-    context.tc.post('/tickets', json = ticket_crear)
-    context.tc.post('/clientes', json = cliente_a_asignar)
-    cliente = context.tc.get('/clientes').get_json()['clientes'][0]['razon_social']
-    ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['cliente_asignado'] = cliente
-
-@when(u'I modify the client of the ticket with another that doesnt exist')
-def step_impl(context):
-    cliente = {}
-    ticket = context.tc.get('/tickets').get_json()['tickets'][0]
-    ticket['cliente_asignado'] = None
-    resp = context.tc.put('/tickets/1', json=None)
-    context.result = resp
+    data = {
+        'razon_social' : None,
+        'CUIT' : None,
+        'descripcion' : None,
+        'fecha_desde_que_es_cliente' : None
+    }
+    resp = context.tc.put('/clientes/1', json=data)
+    context.result = resp.get_json()['mensaje']

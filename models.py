@@ -25,7 +25,7 @@ class Ticket(db.Model):
     
     # Foreigns and relations
     id_cliente = db.Column(db.Integer(),
-                           db.ForeignKey('cliente.id_cliente'),
+                           db.ForeignKey('cliente.id'),
                            nullable=True)
     cliente = db.relationship('Cliente', backref='cliente')
 
@@ -74,7 +74,7 @@ class Cliente(db.Model):
     """Clase que define la tabla Cliente
     """
     __tablename__ = 'cliente'
-    id_cliente = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     razon_social = db.Column(db.String(150), nullable=False)
     CUIT = db.Column(db.String(300), nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
@@ -85,7 +85,7 @@ class Cliente(db.Model):
         ''' Retorna el diccionario de la instancia 
         '''
         d = {
-            'id_cliente': self.id_cliente,
+            'id': self.id,
             'razon_social': self.razon_social,
             'CUIT': self.CUIT,
             'descripcion': self.descripcion,
