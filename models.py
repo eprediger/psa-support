@@ -79,19 +79,19 @@ class Cliente(db.Model):
     """
     Clase que define la tabla Cliente
     """
+
     __tablename__ = 'clientes'
 
     id = db.Column(db.Integer, primary_key=True)
     razon_social = db.Column(db.String(150), nullable=False)
     CUIT = db.Column(db.String(300), nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
-#    fecha_desde_que_es_cliente = db.Column(db.DateTime(timezone=True), nullable=False)
     fecha_desde_que_es_cliente = db.Column(db.String(300), nullable=False)
     asignado = db.Column(db.Boolean, default=False, nullable=True)
 
     def a_diccionario(self):
-        ''' Retorna el diccionario de la instancia
-
+        '''
+        Retorna el diccionario de la instancia
         '''
         d = {
             'id': self.id,
