@@ -5,12 +5,9 @@ from database import db
 from flask_cors import CORS
 from routes import clientes, tickets
 
-app = Flask(__name__)
-CORS(app)
-
-
 def create_app(env):
     app = Flask(__name__)
+    CORS(app)
 
     app.config.from_object(env)
 
