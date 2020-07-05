@@ -3,7 +3,11 @@ from flask import Flask
 
 from config import config
 from database import db
+from flask_cors import CORS
 from routes import clientes, tickets
+
+app = Flask(__name__)
+CORS(app)
 
 
 def create_app(env):
