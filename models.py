@@ -29,7 +29,7 @@ class Ticket(db.Model):
 
     # Foreigns and relations
     id_cliente = db.Column(db.Integer(),
-                           db.ForeignKey('cliente.id'),
+                           db.ForeignKey('clientes.id'),
                            nullable=True)
     cliente = db.relationship('Cliente', backref='cliente')
 
