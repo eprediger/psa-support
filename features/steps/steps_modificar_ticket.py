@@ -1,11 +1,8 @@
-from behave import given, when, then
-from app import create_app, setup_database
 from datetime import datetime, timedelta
-from settings import SEVERIDADES
 
-app = create_app()
-setup_database(app)
-tc = app.test_client()
+from behave import given, then, when
+
+from settings import SEVERIDADES
 
 data_crear = {
     'nombre': 'test',
@@ -76,7 +73,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'pasos': pasos,
             'estado': estado}
     resp = context.tc.put('/tickets/1', json=data)
-    
+
     resp = context.tc.get('/tickets')
     fecha_finalizacion = resp.get_json()['tickets'][0]['fecha_finalizacion']
     context.result = datetime.strptime(fecha_finalizacion, '%Y-%m-%d %H:%M:%S').date()

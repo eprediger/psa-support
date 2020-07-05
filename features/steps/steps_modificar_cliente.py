@@ -1,6 +1,7 @@
-from behave import given, when, then
-from app import create_app, setup_database
 from datetime import datetime, timedelta
+
+from behave import given, then, when
+
 from settings import SEVERIDADES
 
 cliente_creado = {
@@ -26,7 +27,7 @@ def step_impl(context):
 @when(u'I modify the razon social por "razon social 2", CUIT:"654321", descripcion: "descripcion modificada" y fecha desde que es cliente por "123123123"')
 def step_impl(context):
     context.tc.put('/clientes/1', json=modificaciones_cliente)
-    
+
 
 
 @then(u'I can see a cliente With CUIT "{CUIT}" and the rest of its atributes modified.')

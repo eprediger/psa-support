@@ -1,6 +1,7 @@
-from behave import given, when, then
-from app import create_app, setup_database
 from datetime import datetime, timedelta
+
+from behave import given, then, when
+
 from settings import SEVERIDADES
 
 ticket_crear = {

@@ -1,8 +1,8 @@
-from behave import given, when, then
-from app import create_app, setup_database
 from datetime import datetime, timedelta
-from settings import SEVERIDADES
 
+from behave import given, then, when
+
+from settings import SEVERIDADES
 
 data_crear = {
     'nombre': 'test',

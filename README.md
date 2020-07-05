@@ -32,19 +32,31 @@ python app.py
 
 ## Heroku
 
-### Despliegue
+El comando `git remote -v` debería mostrar una salida parecida a la siguiente:
 
-Vincular reposito a heroku: `heroku git:remote -a psa-api-support`
+```
+heroku	https://git.heroku.com/psa-api-support.git (fetch)
+heroku	https://git.heroku.com/psa-api-support.git (push)
+origin	git@github.com:eprediger/psa-support.git (fetch)
+origin	git@github.com:eprediger/psa-support.git (push)
+```
+
+De lo contrario, vincular el repositorio ejecutando `heroku git:remote -a psa-api-support`
+
+### Despliegue
 
 ```
 git push heroku master
 ```
+
 
 ### Logs
 
 ```
 heroku logs --tail
 ```
+
+#### Base de Datos: `heroku pg:info`
 
 ### Scaling
 

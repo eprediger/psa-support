@@ -1,6 +1,7 @@
-from behave import given, when, then
-from app import create_app, setup_database
 from datetime import datetime, timedelta
+
+from behave import given, then, when
+
 from settings import SEVERIDADES
 
 ticket_crear = {
@@ -56,7 +57,7 @@ def step_impl(context, razon_social, CUIT, descripcion, fecha_desde_que_es_clien
         'CUIT' : CUIT,
         'fecha_desde_que_es_cliente' : fecha_desde_que_es_cliente
     }
-    context.tc.post('/clientes',json=data)    
+    context.tc.post('/clientes',json=data)
     context.tc.post('/tickets', json=ticket_crear)
     id_cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id']
     ticket = context.tc.get('/tickets').get_json()['tickets'][0]

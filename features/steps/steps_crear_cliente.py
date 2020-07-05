@@ -1,7 +1,9 @@
-from behave import given, when, then
-from app import create_app, setup_database
 from datetime import datetime, timedelta
+
+from behave import given, then, when
+
 from settings import SEVERIDADES
+
 
 @when(u'I create a client with razon social:"{razon_social}", descripcion:"{descripcion}", CUIT:"{CUIT}", fecha desde que es cliente:"{fecha_desde_que_es_cliente}"')
 def step_impl(context, razon_social, descripcion, CUIT, fecha_desde_que_es_cliente):
@@ -26,7 +28,7 @@ def step_impl(context):
         'descripcion' : None,
         'CUIT' : None,
         'fecha_desde_que_es_cliente' : None
-    }    
+    }
     resp = context.tc.post('/clientes', json=data)
     context.result = resp.get_json()['mensaje']
 
