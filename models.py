@@ -1,11 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
+
 from database import db, editar_instancia
 
 
 class Ticket(db.Model):
-    """Clase que define la tabla Ticket
     """
-    __tablename__ = 'ticket'
+    Clase que define la tabla Ticket
+    """
+
+    __tablename__ = 'tickets'
+
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(150), nullable=True)
     descripcion = db.Column(db.String(300), nullable=True)
@@ -22,7 +26,7 @@ class Ticket(db.Model):
     fecha_limite = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_finalizacion = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_ultima_actualizacion = db.Column(db.DateTime(timezone=True), nullable=True)
-    
+
     # Foreigns and relations
     id_cliente = db.Column(db.Integer(),
                            db.ForeignKey('cliente.id'),
@@ -30,7 +34,7 @@ class Ticket(db.Model):
     cliente = db.relationship('Cliente', backref='cliente')
 
     def a_diccionario(self):
-        ''' Retorna el diccionario de la instancia 
+        ''' Retorna el diccionario de la instancia
         '''
         if self.fecha_limite:
             fecha_limite = self.fecha_limite.strftime('%Y-%m-%d %H:%M:%S')
@@ -84,7 +88,7 @@ class Cliente(db.Model):
     asignado = db.Column(db.Boolean, default=False, nullable=True)
 
     def a_diccionario(self):
-        ''' Retorna el diccionario de la instancia 
+        ''' Retorna el diccionario de la instancia
 
         '''
         d = {

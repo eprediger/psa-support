@@ -1,4 +1,4 @@
-# PSA: [API RESTful Módulo de Soporte](https://blooming-badlands-85138.herokuapp.com/)
+# PSA: [API RESTful Módulo de Soporte](https://psa-api-support.herokuapp.com/)
 
 ## Requisitos
 
