@@ -18,8 +18,4 @@ selenium==3.141.0
 six==1.15.0
 urllib3==1.25.9
 Werkzeug==1.0.1
-flask_sqlalchemy
-behave
-selenium
-pytz
 flask_cors
