@@ -1,8 +1,10 @@
 from flask import Flask
 from routes import tickets, clientes
 from database import db
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 def create_app(dev=True):
 	app.config['DEBUG'] = dev

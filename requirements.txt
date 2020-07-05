@@ -16,3 +16,4 @@ flask_sqlalchemy
 behave
 selenium
 pytz
+flask_cors
