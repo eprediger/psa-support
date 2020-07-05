@@ -1,4 +1,4 @@
-# PSA: [API RESTful Módulo de Soporte](https://blooming-badlands-85138.herokuapp.com/)
+# PSA: [API RESTful Módulo de Soporte](https://psa-api-support.herokuapp.com/)
 
 ## Requisitos
 
@@ -33,6 +33,8 @@ python app.py
 ## Heroku
 
 ### Despliegue
+
+Vincular reposito a heroku: `heroku git:remote -a psa-api-support`
 
 ```
 git push heroku master
