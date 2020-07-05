@@ -1,3 +1,4 @@
+from decouple import config as config_decouple
 from flask import Flask
 
 from config import config
@@ -20,8 +21,10 @@ def create_app(env):
     return app
 
 environment = config['development']
+if config_decouple('PRODUCTION', default=False):
+    enviroment = config['production']
 
 app = create_app(environment)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run()
