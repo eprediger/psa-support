@@ -1,23 +1,27 @@
 from flask import Flask
-from routes import tickets, clientes
+
+from config import config
 from database import db
+from routes import clientes, tickets
 
-app = Flask(__name__)
 
-def create_app(dev=True):
-	app.config['DEBUG'] = dev
-	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-	db.init_app(app)
-	app.register_blueprint(tickets)
-	app.register_blueprint(clientes)
-	return app
+def create_app(env):
+    app = Flask(__name__)
 
-def setup_database(app):
+    app.config.from_object(env)
+
+    app.register_blueprint(tickets)
+    app.register_blueprint(clientes)
+
     with app.app_context():
+        db.init_app(app)
         db.create_all()
 
+    return app
+
+environment = config['development']
+
+app = create_app(environment)
+
 if __name__ == '__main__':
-    create_app()
-    setup_database(app)
-    app.run()
+    app.run(host='0.0.0.0', port=5000, debug=True)
