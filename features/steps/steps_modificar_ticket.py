@@ -75,7 +75,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
     resp = context.tc.put('/tickets/1', json=data)
 
     resp = context.tc.get('/tickets')
-    fecha_finalizacion = resp.get_json()['tickets'][0]['fecha_finalizacion']
+    fecha_finalizacion = resp.get_json()[0]['fecha_finalizacion']
     context.result = datetime.strptime(fecha_finalizacion, '%Y-%m-%d %H:%M:%S').date()
 
 @then(u"The fecha finalizacion will be the today's date")
@@ -98,7 +98,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
     resp = context.tc.put('/tickets/1', json=data)
     resp = context.tc.get('/tickets')
 
-    fecha_limite = resp.get_json()['tickets'][0]['fecha_limite']
+    fecha_limite = resp.get_json()[0]['fecha_limite']
     context.result = datetime.strptime(fecha_limite, '%Y-%m-%d %H:%M:%S').date()
 
 

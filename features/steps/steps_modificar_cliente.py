@@ -32,7 +32,7 @@ def step_impl(context):
 
 @then(u'I can see a cliente With CUIT "{CUIT}" and the rest of its atributes modified.')
 def step_impl(context, CUIT):
-    resp =  context.tc.get('/clientes').get_json()['clientes'][0]['CUIT']
+    resp =  context.tc.get('/clientes').get_json()[0]['CUIT']
     print(resp)
     assert resp == CUIT
 
@@ -49,6 +49,6 @@ def step_impl(context):
 
 @then(u'I can see the cliente asigned to the ticket With CUIT "654321" and the rest of its atributes modified.')
 def step_impl(context):
-    resp = context.tc.get('/tickets').get_json()['tickets'][0]['cliente']
+    resp = context.tc.get('/tickets').get_json()[0]['cliente']
     print(resp)
     assert resp['CUIT'] == "654321"

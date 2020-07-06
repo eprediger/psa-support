@@ -16,7 +16,7 @@ data_crear = {
 def step_impl(context):
     print(u'STEP: When ask to view all the tickets')
     resp = context.tc.get('/tickets')
-    context.result = resp.get_json()['tickets']
+    context.result = resp.get_json()
 
 
 @when(u'I ask to view all the tickets')
@@ -24,7 +24,7 @@ def step_impl(context):
     print(u'STEP: When ask to view all the tickets')
     resp = context.tc.post('/tickets', json=data_crear)
     resp = context.tc.get('/tickets')
-    context.result = resp.get_json()['tickets']
+    context.result = resp.get_json()
 
 
 @then(u'I receive an empty list of tickets')

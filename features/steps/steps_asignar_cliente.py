@@ -27,8 +27,8 @@ def step_impl(context):
 
 @when(u'I asign the client to the ticket')
 def step_impl(context):
-    id_cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id']
-    ticket = context.tc.get('/tickets').get_json()['tickets'][0]
+    id_cliente = context.tc.get('/clientes').get_json()[0]['id']
+    ticket = context.tc.get('/tickets').get_json()[0]
     ticket['id_cliente'] = id_cliente
     resp = context.tc.put('/tickets/1', json=ticket)
     context.result = resp
@@ -36,8 +36,8 @@ def step_impl(context):
 
 @then(u'I can see the name of the client asigned to the ticket')
 def step_impl(context):
-    print(context.tc.get('/tickets').get_json()['tickets'][0]['cliente'])
-    assert context.tc.get('/tickets').get_json()['tickets'][0]['cliente']['razon_social'] == "Test S.A."
+    print(context.tc.get('/tickets').get_json()[0]['cliente'])
+    assert context.tc.get('/tickets').get_json()[0]['cliente']['razon_social'] == "Test S.A."
 
 @given(u'I have a ticket')
 def step_impl(context):
@@ -47,7 +47,7 @@ def step_impl(context):
 @when(u'I asign an unexisting client to the ticket')
 def step_impl(context):
     print(u'STEP: When I asign an unexisting client to the ticket')
-    ticket = context.tc.get('/tickets').get_json()['tickets'][0]
+    ticket = context.tc.get('/tickets').get_json()[0]
     resp = context.tc.put('/tickets/1', json=None)
     context.result = resp
 

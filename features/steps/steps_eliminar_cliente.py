@@ -35,7 +35,7 @@ def step_impl(context):
 
 @given(u'I have no clients')
 def step_impl(context):
-    total_clientes = len(context.tc.get('/clientes').get_json()['clientes'])
+    total_clientes = len(context.tc.get('/clientes').get_json())
     print("En total hay: ",total_clientes)
 
 
@@ -59,14 +59,14 @@ def step_impl(context, razon_social, CUIT, descripcion, fecha_desde_que_es_clien
     }
     context.tc.post('/clientes',json=data)
     context.tc.post('/tickets', json=ticket_crear)
-    id_cliente = context.tc.get('/clientes').get_json()['clientes'][0]['id']
-    ticket = context.tc.get('/tickets').get_json()['tickets'][0]
+    id_cliente = context.tc.get('/clientes').get_json()[0]['id']
+    ticket = context.tc.get('/tickets').get_json()[0]
     ticket['id_cliente'] = id_cliente
     context.tc.put('/tickets/1', json = ticket)
-    print(u'{}'.format(context.tc.get('/tickets').get_json()['tickets'][0]))
+    print(u'{}'.format(context.tc.get('/tickets').get_json()[0]))
 
 @then(u'I can see a warning saying that the client cant be deleted because its asigned to a ticket')
 def step_impl(context):
-    print(context.tc.get('/tickets').get_json()['tickets'][0])
+    print(context.tc.get('/tickets').get_json()[0])
     print(context.result)
     assert context.result == "No se puede eliminar el cliente solicitado ya que está asignado a un ticket"

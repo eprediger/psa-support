@@ -14,7 +14,7 @@ def step_impl(context, razon_social, descripcion, CUIT, fecha_desde_que_es_clien
         'fecha_desde_que_es_cliente' : fecha_desde_que_es_cliente
     }
     context.tc.post('/clientes', json=data)
-    resp = context.tc.get('/clientes').get_json()['clientes'][0]['CUIT']
+    resp = context.tc.get('/clientes').get_json()[0]['CUIT']
     context.result = resp
 
 @then(u'a client is created with a CUIT:"{CUIT}"')
