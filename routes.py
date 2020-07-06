@@ -7,11 +7,11 @@ from database import obtener_una_instancia, agregar_instancia,\
                      editar_instancia, eliminar_instancia
 from datetime import datetime, timedelta
 from pytz import timezone
+from flask_cors import CORS, cross_origin
 
 
 tickets = Blueprint('tickets', __name__)
 clientes = Blueprint('clientes', __name__)
-
 
 @tickets.route('/tickets', methods=['GET'])
 def obtener_tickets():
@@ -21,6 +21,7 @@ def obtener_tickets():
 
 
 @tickets.route('/tickets', methods=['POST'])
+@cross_origin(allow_headers=['Content-Type'])
 def crear_ticket():
 	try:
 		data = request.get_json()

@@ -8,7 +8,7 @@ from routes import clientes, tickets
 
 def create_app(env):
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, resources={r'/*': {"origins": "*"}})
 
     app.config.from_object(env)
 
