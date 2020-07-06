@@ -52,12 +52,12 @@ class Ticket(db.Model):
             fecha_actualizacion = self.fecha_ultima_actualizacion.strftime('%Y-%m-%d %H:%M:%S')
         else:
             fecha_actualizacion = None
-        if self.id_cliente:
-            editar_instancia(Cliente, self.id_cliente, asignado = True)
+
+        if self.cliente:
             cliente = self.cliente.a_diccionario()
         else:
             cliente = None
-
+        
         d = {
             'id': self.id,
             'nombre': self.nombre,
@@ -87,7 +87,6 @@ class Cliente(db.Model):
     CUIT = db.Column(db.String(300), nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
     fecha_desde_que_es_cliente = db.Column(db.String(300), nullable=False)
-    asignado = db.Column(db.Boolean, default=False, nullable=True)
 
     def a_diccionario(self):
         '''
@@ -98,7 +97,6 @@ class Cliente(db.Model):
             'razon_social': self.razon_social,
             'CUIT': self.CUIT,
             'descripcion': self.descripcion,
-            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente,
-            'asignado': self.asignado
+            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente
         }
         return d

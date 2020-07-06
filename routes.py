@@ -205,7 +205,9 @@ def eliminar_cliente(id_cliente):
 	if not cliente:
 		return jsonify({'mensaje': 'No existe el cliente solicitado'}), CODIGO_HTTP_NOT_FOUND
 
-	if cliente.asignado:
+	ticket_asociado = obtener_una_instancia(Ticket, id_cliente=id_cliente)
+
+	if ticket_asociado:
 	 	return jsonify({'mensaje': 'No se puede eliminar el cliente solicitado ya que está asignado a un ticket'}), CODIGO_HTTP_BAD_REQUEST
 
 	eliminar_instancia(Cliente, id=id_cliente)
