@@ -1,14 +1,14 @@
-from flask import request, jsonify
-from models import Ticket, Cliente
-from flask.blueprints import Blueprint
-from settings import CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NOT_FOUND,\
-					 CODIGO_HTTP_OK, SEVERIDADES
-from database import obtener_una_instancia, agregar_instancia,\
-                     editar_instancia, eliminar_instancia
 from datetime import datetime, timedelta
+
+from flask import jsonify, request
+from flask.blueprints import Blueprint
 from pytz import timezone
 
-
+from database import (agregar_instancia, editar_instancia, eliminar_instancia,
+                      obtener_una_instancia)
+from models import Cliente, Ticket
+from settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
+                      CODIGO_HTTP_NOT_FOUND, CODIGO_HTTP_OK, SEVERIDADES)
 
 tickets = Blueprint('tickets', __name__)
 clientes = Blueprint('clientes', __name__)
@@ -18,6 +18,14 @@ def obtener_tickets():
 	tickets = Ticket.query.all()
 	todos_los_tickets = [t.a_diccionario() for t in tickets]
 	return jsonify(todos_los_tickets), CODIGO_HTTP_OK
+
+@tickets.route('/tickets/<int:id>', methods=['GET'])
+def obtener_ticket(id):
+	try:
+		ticket = obtener_una_instancia(Ticket, id=id)
+		return jsonify(ticket.a_diccionario()), CODIGO_HTTP_OK
+	except:
+		return jsonify({'mensaje': 'Ticket no encontrado'}), CODIGO_HTTP_BAD_REQUEST
 
 
 @tickets.route('/tickets', methods=['POST'])
@@ -30,7 +38,7 @@ def crear_ticket():
 		severidad = data['severidad'].lower()
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
-	
+
 	try:
 		pasos = data['pasos']
 	except:
@@ -38,7 +46,7 @@ def crear_ticket():
 
 	if severidad not in SEVERIDADES.keys():
 		return jsonify({'mensaje': 'La severidad debe ser Alta, Media o Baja'}), CODIGO_HTTP_BAD_REQUEST
-	
+
 	if tipo not in ['error', 'consulta', 'mejora']:
 		return jsonify({'mensaje': 'El tipo de ticket debe ser Error/Consulta/Mejora'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -47,7 +55,7 @@ def crear_ticket():
 
 	t = agregar_instancia(Ticket, nombre=nombre, descripcion=descripcion,
 						  tipo=tipo, severidad=severidad,
-						  fecha_creacion=fecha_creacion, 
+						  fecha_creacion=fecha_creacion,
 						  fecha_limite=fecha_limite,
 						  fecha_ultima_actualizacion=fecha_creacion,
 						  pasos=pasos)
@@ -68,7 +76,7 @@ def editar_ticket(id_ticket):
 		responsable = data['responsable']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
-	
+
 	try:
 		id_cliente = data['id_cliente']
 	except:
@@ -80,7 +88,7 @@ def editar_ticket(id_ticket):
 		pasos = None
 
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
-	
+
 	if not ticket:
 		return jsonify({'Mensaje': 'No existe el ticket solicitado'}), 404
 
@@ -90,10 +98,10 @@ def editar_ticket(id_ticket):
 
 	if not ticket:
 		return jsonify({'mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
-	
+
 	if severidad not in SEVERIDADES.keys():
 		return jsonify({'mensaje': 'La severidad debe ser Alta, Media o Baja'}), CODIGO_HTTP_BAD_REQUEST
-	
+
 	if tipo not in ['error', 'consulta', 'mejora']:
 		return jsonify({'mensaje': 'El tipo de ticket debe ser Error/Consulta/Mejora'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -126,14 +134,14 @@ def editar_ticket(id_ticket):
 						fecha_finalizacion=fecha_finalizacion,
 						responsable=responsable,
 						pasos=pasos,
-						id_cliente=id_cliente)	
+						id_cliente=id_cliente)
 
-	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
+	return jsonify(), CODIGO_HTTP_NO_CONTENT
 
 @tickets.route('/tickets/<int:id_ticket>', methods=['DELETE'])
 def archivar_ticket(id_ticket):
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
-	
+
 	if not ticket:
 		return jsonify({'mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
 
@@ -142,6 +150,7 @@ def archivar_ticket(id_ticket):
 
 	eliminar_instancia(Ticket, id=id_ticket)
 	return jsonify({'mensaje': 'Ticket archivado con exito!'}), CODIGO_HTTP_OK
+
 
 @clientes.route('/clientes', methods=['GET'])
 def obtener_clientes():
@@ -165,8 +174,8 @@ def crear_cliente():
 		if data[d] == None:
 			return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
-	c = agregar_instancia(Cliente, 
-						razon_social=razon_social, 
+	c = agregar_instancia(Cliente,
+						razon_social=razon_social,
 						descripcion=descripcion,
 						CUIT=CUIT,
 						fecha_desde_que_es_cliente=fecha_desde_que_es_cliente)
@@ -174,7 +183,7 @@ def crear_cliente():
 
 	return jsonify(cliente_diccionario), CODIGO_HTTP_OK
 
-@tickets.route('/clientes/<int:id>', methods=['PUT'])
+@clientes.route('/clientes/<int:id>', methods=['PUT'])
 def editar_cliente(id):
 	try:
 		data = request.get_json()
@@ -193,14 +202,14 @@ def editar_cliente(id):
 					descripcion=descripcion,
 					CUIT=CUIT,
 					fecha_desde_que_es_cliente=fecha_desde_que_es_cliente
-					)	
+					)
 
-	return jsonify({'mensaje': 'Ticket actualizado con exito!'}), CODIGO_HTTP_OK
+	return jsonify(), CODIGO_HTTP_NO_CONTENT
 
 @clientes.route('/clientes/<int:id_cliente>', methods=['DELETE'])
 def eliminar_cliente(id_cliente):
 	cliente = obtener_una_instancia(Cliente, id=id_cliente)
-	
+
 	if not cliente:
 		return jsonify({'mensaje': 'No existe el cliente solicitado'}), CODIGO_HTTP_NOT_FOUND
 
