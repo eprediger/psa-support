@@ -44,6 +44,7 @@ def crear_ticket():
 		descripcion = data['descripcion']
 		tipo = data['tipo'].lower()
 		severidad = data['severidad'].lower()
+		id_cliente = data['cliente']['id']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -51,6 +52,11 @@ def crear_ticket():
 		pasos = data['pasos']
 	except:
 		pasos = None
+	
+	try:
+		id_responsable = data['id_responsable']
+	except:
+		id_responsable = None
 
 	if severidad not in SEVERIDADES.keys():
 		return jsonify({'mensaje': 'La severidad debe ser Alta, Media o Baja'}), CODIGO_HTTP_BAD_REQUEST
@@ -66,7 +72,10 @@ def crear_ticket():
 						  fecha_creacion=fecha_creacion,
 						  fecha_limite=fecha_limite,
 						  fecha_ultima_actualizacion=fecha_creacion,
-						  pasos=pasos)
+						  pasos=pasos,
+						  id_cliente=id_cliente,
+						  id_responsable=id_responsable)
+
 	ticket_diccionario = t.a_diccionario()
 
 	return jsonify(ticket_diccionario), CODIGO_HTTP_OK
@@ -81,19 +90,20 @@ def editar_ticket(id_ticket):
 		tipo = data['tipo'].lower()
 		estado = data['estado'].lower()
 		severidad = data['severidad'].lower()
-		responsable = data['responsable']
+		id_cliente = data['cliente']['id']
 	except:
+		print('\n \n \n \n \n \n \n \n\n \n \n SISI')
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
-
-	try:
-		id_cliente = data['id_cliente']
-	except:
-		id_cliente = None
 
 	try:
 		pasos = data['pasos']
 	except:
 		pasos = None
+	
+	try:
+		responsable = data['id_responsable']
+	except:
+		responsable = None
 
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
 
@@ -113,7 +123,7 @@ def editar_ticket(id_ticket):
 	if tipo not in ['error', 'consulta', 'mejora']:
 		return jsonify({'mensaje': 'El tipo de ticket debe ser Error/Consulta/Mejora'}), CODIGO_HTTP_BAD_REQUEST
 
-	if estado not in ['nuevo', 'asignado', 'cerrado']:
+	if estado not in ['nuevo', 'en progreso', 'cerrado', 'esperando informaicon']:
 		return jsonify({'mensaje': 'El estado de ticket debe ser Nuevo/Asignado/Cerrado'}), CODIGO_HTTP_BAD_REQUEST
 
 	fecha_ultima_actualizacion = datetime.now(timezone('America/Argentina/Buenos_Aires'))
@@ -140,7 +150,7 @@ def editar_ticket(id_ticket):
 						fecha_ultima_actualizacion=fecha_ultima_actualizacion,
 						fecha_limite=fecha_limite,
 						fecha_finalizacion=fecha_finalizacion,
-						responsable=responsable,
+						id_responsable=responsable,
 						pasos=pasos,
 						id_cliente=id_cliente)
 

@@ -9,6 +9,8 @@ data_crear = {
     'descripcion': 'test',
     'severidad': 'alta',
     'tipo': 'consulta',
+    'cliente': {'id': None},
+    'id_responsable': None
 }
 
 data_editar = {
@@ -18,7 +20,8 @@ data_editar = {
     'tipo': 'consulta',
     'pasos': None,
     'estado': 'cerrado',
-    'responsable': None
+    'id_responsable': None,
+    'cliente': {'id': None}
 }
 
 
@@ -27,13 +30,15 @@ data_editar = {
 def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable, pasos):
     #print('STEP: When I ask to modify the ticket with nombre "{}", descripcion "{}", tipo "{}", severidad "{}", estado "{}", responsable "{}", pasos "{}"'.format(nombre, descripcion, tipo, severidad, estado, responsable, pasos))
     resp = context.tc.post('/tickets', json=data_crear)
+    print('resp \n \n \n \n \n \n \n \n', resp)
     data = {'nombre': nombre,
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'responsable': responsable,
+            'id_responsable': 1,
             'pasos': pasos,
-            'estado': estado}
+            'estado': estado,
+            'cliente': {'id': None }}
     resp = context.tc.put('/tickets/1', json=data)
     context.result = resp.get_json()['mensaje']
 
@@ -47,9 +52,10 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'responsable': responsable,
+            'id_responsable': 1,
             'pasos': pasos,
-            'estado': estado}
+            'estado': estado,
+            'cliente': {'id': None }}
     resp = context.tc.put('/tickets/1', json=data)
     context.result = resp.get_json()['mensaje']
 
@@ -69,9 +75,10 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'responsable': responsable,
+            'id_responsable': 1,
             'pasos': pasos,
-            'estado': estado}
+            'estado': estado,
+            'cliente': {'id': None }}
     resp = context.tc.put('/tickets/1', json=data)
 
     resp = context.tc.get('/tickets')
@@ -91,9 +98,10 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'responsable': responsable,
+            'id_responsable': 1,
             'pasos': pasos,
-            'estado': estado}
+            'estado': estado,
+            'cliente': {'id': None }}
 
     resp = context.tc.put('/tickets/1', json=data)
     resp = context.tc.get('/tickets')

@@ -15,13 +15,13 @@ class Ticket(db.Model):
     descripcion = db.Column(db.String(300), nullable=True)
     tipo = db.Column(db.Enum('error', 'consulta', 'mejora'),
                      nullable=False)
-    estado = db.Column(db.Enum('nuevo', 'asignado',
+    estado = db.Column(db.Enum('nuevo', 'en progreso', 'esperando informacion',
                                'cerrado'), nullable=False,
                                default='nuevo')
     severidad = db.Column(db.Enum('baja', 'media', 'alta'),
                           nullable=True)
-    responsable = db.Column(db.String(40), nullable=True)
-    pasos = db.Column(db.String(300), nullable=True)
+    id_responsable = db.Column(db.Integer, nullable=True)
+    pasos = db.Column(db.String(300), nullable=True, default='')
     fecha_creacion = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_limite = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_finalizacion = db.Column(db.DateTime(timezone=True), nullable=True)
@@ -66,7 +66,7 @@ class Ticket(db.Model):
             'estado': self.estado,
             'severidad': self.severidad,
             'pasos': self.pasos,
-            'responsable': self.responsable,
+            'id_responsable': self.id_responsable,
             'fecha_creacion': fecha_creacion,
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,

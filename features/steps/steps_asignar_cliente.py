@@ -9,6 +9,7 @@ ticket_crear = {
     'descripcion': 'test',
     'severidad': 'alta',
     'tipo': 'consulta',
+    'cliente': {'id': None}
 }
 
 cliente_a_asignar = {
@@ -29,7 +30,7 @@ def step_impl(context):
 def step_impl(context):
     id_cliente = context.tc.get('/clientes').get_json()[0]['id']
     ticket = context.tc.get('/tickets').get_json()[0]
-    ticket['id_cliente'] = id_cliente
+    ticket['cliente'] = {'id': id_cliente}
     resp = context.tc.put('/tickets/1', json=ticket)
     context.result = resp
 

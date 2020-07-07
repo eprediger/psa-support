@@ -9,6 +9,7 @@ data_crear = {
     'descripcion': 'test',
     'severidad': 'alta',
     'tipo': 'consulta',
+    'cliente': {'id': None}
 }
 
 data_editar = {
@@ -18,7 +19,8 @@ data_editar = {
     'tipo': 'consulta',
     'pasos': None,
     'estado': 'cerrado',
-    'responsable': None
+    'responsable': None,
+    'cliente': {'id': None}
 }
 
 

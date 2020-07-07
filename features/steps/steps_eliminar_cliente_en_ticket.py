@@ -10,7 +10,7 @@ ticket_crear = {
     'severidad': 'alta',
     'tipo': 'consulta',
     'pasos': None,
-    'cliente_asignado' : 'Cliente Inicial'
+    'cliente': {'id': None}
 }
 
 cliente_a_asignar = {

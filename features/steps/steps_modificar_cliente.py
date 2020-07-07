@@ -28,8 +28,6 @@ def step_impl(context):
 def step_impl(context):
     context.tc.put('/clientes/1', json=modificaciones_cliente)
 
-
-
 @then(u'I can see a cliente With CUIT "{CUIT}" and the rest of its atributes modified.')
 def step_impl(context, CUIT):
     resp =  context.tc.get('/clientes').get_json()[0]['CUIT']

@@ -9,7 +9,8 @@ data_crear = {
     'descripcion': 'test',
     'severidad': 'alta',
     'tipo': 'consulta',
-    'pasos': None
+    'pasos': None,
+    'cliente': {'id': None}
 }
 
 @when(u'I ask to view all the tickets and they don t exists')

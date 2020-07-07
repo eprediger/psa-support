@@ -9,6 +9,7 @@ ticket_crear = {
     'descripcion': 'test de descripcion',
     'severidad': 'alta',
     'tipo': 'consulta',
+    'cliente': {'id': None}
 }
 
 @given(u'I have a client with razon social: "{razon_social}", CUIT:"{CUIT}", descripcion:"{descripcion}", fecha desde que es cliente:"{fecha_desde_que_es_cliente}"')
@@ -61,7 +62,7 @@ def step_impl(context, razon_social, CUIT, descripcion, fecha_desde_que_es_clien
     context.tc.post('/tickets', json=ticket_crear)
     id_cliente = context.tc.get('/clientes').get_json()[0]['id']
     ticket = context.tc.get('/tickets').get_json()[0]
-    ticket['id_cliente'] = id_cliente
+    ticket['cliente'] = {'id': id_cliente}
     context.tc.put('/tickets/1', json = ticket)
     print(u'{}'.format(context.tc.get('/tickets').get_json()[0]))
 

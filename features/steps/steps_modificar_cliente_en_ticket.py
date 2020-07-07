@@ -9,6 +9,7 @@ ticket_crear = {
     'descripcion': 'test de descripcion',
     'severidad': 'alta',
     'tipo': 'consulta',
+    'cliente': {'id': None}
 }
 
 cliente_a_asignar = {
@@ -32,7 +33,7 @@ def step_impl(context):
     context.tc.post('/clientes', json = cliente_a_modificar)
     id_cliente = context.tc.get('/clientes').get_json()[0]['id']
     ticket = context.tc.get('/tickets').get_json()[0]
-    ticket['id_cliente'] = id_cliente
+    ticket['cliente'] = {'id': id_cliente}
     context.tc.put('/tickets/1', json=ticket)
 
 
@@ -40,7 +41,7 @@ def step_impl(context):
 def step_impl(context):
     id_cliente = context.tc.get('/clientes').get_json()[1]['id']
     ticket = context.tc.get('/tickets').get_json()[0]
-    ticket['id_cliente'] = id_cliente
+    ticket['cliente'] = {'id': id_cliente}
     context.tc.put('/tickets/1', json=ticket)
 
 

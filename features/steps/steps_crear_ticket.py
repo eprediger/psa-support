@@ -11,7 +11,9 @@ def step_impl(context, nombre, descripcion, tipo, severidad):
     data = {'nombre': nombre,
             'tipo': tipo,
             'severidad': severidad,
-            'descripcion': descripcion}
+            'descripcion': descripcion,
+            'cliente': {'id': None}
+        }
     resp = context.tc.post('/tickets', json=data)
 
     if severidad not in SEVERIDADES.keys() or tipo not in ['error', 'consulta', 'mejora']:
@@ -29,7 +31,8 @@ def step_impl(context, descripcion, tipo, severidad):
     print(u'STEP: When I create a ticket with descripcion "{}", tipo "{}", severidad "{}"'.format(descripcion, tipo, severidad))
     data = {'tipo': tipo,
             'severidad': severidad,
-            'descripcion': descripcion}
+            'descripcion': descripcion,
+            'cliente': {'id': None}}
     resp = context.tc.post('/tickets', json=data)
     context.result = resp.get_json()['mensaje']
 
