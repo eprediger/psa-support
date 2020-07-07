@@ -59,6 +59,9 @@ def agregar_y_commitear(*args):
 
     commitear_cambios()
 
+def obtener_todas_las_instancias(model):
+    instancias = model.query.all()
+    return instancias
 
 def obtener_una_instancia(model, **kwargs):
     """Devuelve la primer instancia filtrada segun la llave/valor
@@ -66,3 +69,11 @@ def obtener_una_instancia(model, **kwargs):
     """
     instancia = model.query.filter_by(**kwargs).first()
     return instancia
+
+def obtener_instancias_por_filtro(model, **kwargs):
+	"""
+	Devuelve las instancias que cumplan con los filtros
+	"""
+
+	instancias = model.query.filter_by(**kwargs)
+	return instancias

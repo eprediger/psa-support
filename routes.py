@@ -5,7 +5,7 @@ from flask.blueprints import Blueprint
 from pytz import timezone
 
 from database import (agregar_instancia, editar_instancia, eliminar_instancia,
-                      obtener_una_instancia)
+                      obtener_una_instancia, obtener_instancias_por_filtro, obtener_todas_las_instancias)
 from models import Cliente, Ticket
 from settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
                       CODIGO_HTTP_NOT_FOUND, CODIGO_HTTP_OK, SEVERIDADES)
@@ -15,9 +15,17 @@ clientes = Blueprint('clientes', __name__)
 
 @tickets.route('/tickets', methods=['GET'])
 def obtener_tickets():
-	tickets = Ticket.query.all()
-	todos_los_tickets = [t.a_diccionario() for t in tickets]
-	return jsonify(todos_los_tickets), CODIGO_HTTP_OK
+	tickets = []
+
+	query_params = request.args
+	if query_params:
+		tickets = obtener_instancias_por_filtro(Ticket, **query_params)
+	else:
+		tickets = obtener_todas_las_instancias(Ticket)
+
+	respuesta = [t.a_diccionario() for t in tickets]
+
+	return jsonify(respuesta), CODIGO_HTTP_OK
 
 @tickets.route('/tickets/<int:id>', methods=['GET'])
 def obtener_ticket(id):
@@ -154,7 +162,7 @@ def archivar_ticket(id_ticket):
 
 @clientes.route('/clientes', methods=['GET'])
 def obtener_clientes():
-	clientes = Cliente.query.all()
+	clientes = obtener_todas_las_instancias(Cliente)
 	todos_los_clientes = [c.a_diccionario() for c in clientes]
 	return jsonify(todos_los_clientes), CODIGO_HTTP_OK
 
