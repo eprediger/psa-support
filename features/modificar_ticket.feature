@@ -7,7 +7,7 @@ Feature: Modify a ticket
     Scenario: Success test for edit a ticket
         Given I am an Analista de mesa de ayuda
         When I ask to modify the ticket with nombre "ticketprueba", descripcion "descripcion prueba", tipo "Error", severidad "Alta", estado "Nuevo", responsable "Gaston Parente", pasos "Paso 1, 2 y 3"
-        Then I get a message saying "Ticket actualizado con exito!"
+        Then I get a message saying "204"
     
     Scenario: Invalid estado
         Given I am an Analista de mesa de ayuda

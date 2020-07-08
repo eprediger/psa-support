@@ -108,14 +108,11 @@ def editar_ticket(id_ticket):
 	ticket = obtener_una_instancia(Ticket, id=id_ticket)
 
 	if not ticket:
-		return jsonify({'Mensaje': 'No existe el ticket solicitado'}), 404
+		return jsonify({'Mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
 
 	if ticket.estado:
 		if ticket.estado.lower() == 'cerrado':
 			return jsonify({'mensaje': 'El ticket ya fue cerrado previamente'}), CODIGO_HTTP_BAD_REQUEST
-
-	if not ticket:
-		return jsonify({'mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
 
 	if severidad not in SEVERIDADES.keys():
 		return jsonify({'mensaje': 'La severidad debe ser Alta, Media o Baja'}), CODIGO_HTTP_BAD_REQUEST

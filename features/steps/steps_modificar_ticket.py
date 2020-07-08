@@ -30,7 +30,6 @@ data_editar = {
 def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable, pasos):
     #print('STEP: When I ask to modify the ticket with nombre "{}", descripcion "{}", tipo "{}", severidad "{}", estado "{}", responsable "{}", pasos "{}"'.format(nombre, descripcion, tipo, severidad, estado, responsable, pasos))
     resp = context.tc.post('/tickets', json=data_crear)
-    print('resp \n \n \n \n \n \n \n \n', resp)
     data = {'nombre': nombre,
             'tipo': tipo,
             'severidad': severidad,
@@ -40,7 +39,12 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'estado': estado,
             'cliente': {'id': None }}
     resp = context.tc.put('/tickets/1', json=data)
-    context.result = resp.get_json()['mensaje']
+    try:
+        context.result = resp.get_json()['mensaje']
+    except:
+        print('resp \n \n \n \n \n \n \n \n', resp)
+        context.result = str(resp.status_code)
+
 
 # Criterio de aceptacion e)
 @when(u'I ask to modify the ticket with nombre "{nombre}", descripcion "{descripcion}", tipo "{tipo}", severidad "{severidad}", estado from cerrado "{estado}", responsable "{responsable}", pasos "{pasos}"')
@@ -63,6 +67,8 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
 @then(u'I get a message saying "{mensaje}"')
 def step_impl(context, mensaje):
     #print(u'STEP: I get a message saying "{}"'.format(mensaje))
+    print(context.result)
+    print(mensaje)
     assert context.result == mensaje
 
 
