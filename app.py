@@ -1,14 +1,15 @@
 from decouple import config as config_decouple
 from flask import Flask
+from flask_cors import CORS
 
 from config import config
 from database import db
-from flask_cors import CORS
 from routes import clientes, tickets
+
 
 def create_app(env):
     app = Flask(__name__)
-    cors = CORS(app, resources={r'/*': {"origins": "*"}})
+    cors = CORS(app)
 
     app.config.from_object(env)
 

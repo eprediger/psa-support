@@ -5,7 +5,8 @@ from flask.blueprints import Blueprint
 from pytz import timezone
 
 from database import (agregar_instancia, editar_instancia, eliminar_instancia,
-                      obtener_una_instancia, obtener_instancias_por_filtro, obtener_todas_las_instancias)
+                      obtener_instancias_por_filtro,
+                      obtener_todas_las_instancias, obtener_una_instancia)
 from models import Cliente, Ticket
 from settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
                       CODIGO_HTTP_NOT_FOUND, CODIGO_HTTP_OK, SEVERIDADES)
@@ -52,7 +53,7 @@ def crear_ticket():
 		pasos = data['pasos']
 	except:
 		pasos = None
-	
+
 	try:
 		id_responsable = data['id_responsable']
 	except:
@@ -99,7 +100,7 @@ def editar_ticket(id_ticket):
 		pasos = data['pasos']
 	except:
 		pasos = None
-	
+
 	try:
 		responsable = data['id_responsable']
 	except:
@@ -173,6 +174,13 @@ def obtener_clientes():
 	todos_los_clientes = [c.a_diccionario() for c in clientes]
 	return jsonify(todos_los_clientes), CODIGO_HTTP_OK
 
+@clientes.route('/clientes/<int:id>', methods=['GET'])
+def obtener_cliente(id):
+	try:
+		cliente = obtener_una_instancia(Cliente, id=id)
+		return jsonify(cliente.a_diccionario()), CODIGO_HTTP_OK
+	except:
+		return jsonify({'mensaje': 'Cliente no encontrado'}), CODIGO_HTTP_BAD_REQUEST
 
 @clientes.route('/clientes', methods=['POST'])
 def crear_cliente():
