@@ -6,6 +6,21 @@ from config import config
 from database import db
 from routes import clientes, tickets
 
+from flask_swagger_ui import get_swaggerui_blueprint
+
+
+### swagger specific ###
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "PSA-SOPORTE"
+    }
+)
+### end swagger specific ###
+
 
 def create_app(env):
     app = Flask(__name__)
@@ -13,6 +28,7 @@ def create_app(env):
 
     app.config.from_object(env)
 
+    app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
     app.register_blueprint(tickets)
     app.register_blueprint(clientes)
 
