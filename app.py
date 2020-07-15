@@ -1,25 +1,10 @@
 from decouple import config as config_decouple
 from flask import Flask
 from flask_cors import CORS
-
 from config import config
 from database import db
 from routes import clientes, tickets
-
-from flask_swagger_ui import get_swaggerui_blueprint
-
-
-### swagger specific ###
-SWAGGER_URL = '/swagger'
-API_URL = '/static/swagger.json'
-SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={
-        'app_name': "PSA-SOPORTE"
-    }
-)
-### end swagger specific ###
+from settings import SWAGGERUI_BLUEPRINT, SWAGGER_URL
 
 
 def create_app(env):
