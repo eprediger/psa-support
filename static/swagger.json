@@ -1,248 +1,312 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "description": "Documentación de la API del módulo de Soporte de PSA",
-      "version": "1.0.0",
-      "title": "PSA - Soporte",
-    },
-    "servers": [
-      {
-        "url": "/"
-      }
-    ],
-    "tags": [
-      {
-        "name": "Tickets",
-        "description": "Rutas de la API asociada a tickets"
-      }
-    ],
-    "paths": {
-      "/tickets": {
-        "get": {
-          "tags": [
-            "Tickets"
-          ],
-          "summary": "Retorna todos los tickets",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/components/schemas/ticketRequest"
-              }
-            }
-          }
-        },
-        "post": {
-          "tags": [
-            "Tickets"
-          ],
-          "summary": "Crear un nuevo ticket",
-          "requestBody": {
-            "description": "Body para crear ticket",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/crearTicketBody"
-                }
-              }
-            }
-          },
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "201": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/components/schemas/id"
-              }
-            },
-            "400": {
-              "description": "Failed. Bad post data."
-            }
-          }
-        }
-      },
-      "/tickets/{id}": {
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of the ticket",
-            "type": "string"
-          }
-        ],
-        "get": {
-          "tags": [
-            "Tickets"
-          ],
-          "summary": "Obtener toda la información de un ticket",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "description": "Id del ticket",
-              "schema": {
-                "$ref": "#/components/schemas/id"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Failed. Misunderstood Request."
-            },
-            "404": {
-              "description": "Failed. Ticket request not found."
-            }
-          }
-        },
-        "put": {
-          "summary": "Editar un ticket por ID",
-          "tags": [
-            "Tickets"
-          ],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "description": "Id del ticket",
-              "schema": {
-                "$ref": "#/components/schemas/id"
-              }
-            }
-          ],
-          "requestBody": {
-            "description": "Body para editar ticket",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/editarTicketBody"
-                }
-              }
-            }
-          },
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "204": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Failed. Bad post data."
-            }
-          }
-        }
-      }
-    },
-    "components": {
-      "schemas": {
-        "editarTicketBody": {
-            "type": "object",
-            "properties": {
-              "nombre": {
-                "type": "string",
-                "format": "string"
-              },
-              "descripcion": {
-                  "type": "string",
-                  "format": "string"
-              },
-              "pasos": {
-                "type": "string",
-                "format": "string",
-                "required": false
-            },
-              "severidad": {
-                  "type": "string",
-                  "format": "string",
-                  "enum": ["Alta", "Media", "Baja"]
-              },
-              "tipo": {
-                "type": "string",
-                "format": "email",
-                "enum": ["Error", "Consulta", "Mejora"]
-              },
-              "estado": {
-                "type": "string",
-                "format": "email",
-                "enum": ["Nuevo", "Esperando informacion", "Cerrado", "En progreso"]
-              },
-              "cliente": {
-                  "type": "object",
-                  "properties": {
-                      "id": {
-                          "type": "number",
-                          "format": "number"
-                      }
-                  }
-              }
-            }
-        },
-        "crearTicketBody": {
-          "type": "object",
-          "properties": {
-            "nombre": {
-              "type": "string",
-              "format": "string"
-            },
-            "descripcion": {
-                "type": "string",
-                "format": "string"
-            },
-            "severidad": {
-                "type": "string",
-                "format": "string",
-                "enum": ["Alta", "Media", "Baja"]
-            },
-            "tipo": {
-              "type": "string",
-              "format": "email",
-              "enum": ["Error", "Consulta", "Mejora"]
-            },
-            "cliente": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number",
-                        "format": "number"
-                    }
-                }
-            }
-          }
-        },
-        "ticketRequest": {
-          "type": "object",
-          "properties": {
-                "id": { "type": "number", "format": "number"},
-                "nombre": { "type": "string", "format": "string"},
-                "descripcion": { "type": "string", "format": "string"},
-                "tipo": { "type": "string", "format": "string"},
-                "estado": { "type": "string", "format": "string"},
-                "severidad": { "type": "string", "format": "string"},
-                "pasos": { "type": "string", "format": "string"},
-                "id_responsable": { "type": "number", "format": "number"},
-                "fecha_creacion": { "type": "string", "format": "string"},
-                "fecha_limite": { "type": "string", "format": "string"},
-                "fecha_finalizacion": { "type": "string", "format": "string"},
-                "fecha_ultima_actualizacion": { "type": "string", "format": "string"},
-                "cliente" : {
-                    "type": "object",
-                    "properties": {
-                        "id": {"type": "number", "format": "number"}
-                    }
-            
-                }
-            }
-        }
-      }
-    }
-  }
+	"openapi": "3.0.0",
+	"info": {
+		"description": "Documentación de la API del módulo de Soporte de PSA",
+		"version": "1.0.0",
+		"title": "PSA - Soporte"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:5000/",
+			"description": "Entorno local"
+		},
+		{
+			"url": "https://psa-api-support.herokuapp.com/",
+			"description": "Entorno productivo"
+		}
+	],
+	"tags": [
+		{
+			"name": "Tickets",
+			"description": "Rutas de la API asociada a tickets"
+		}
+	],
+	"paths": {
+		"/tickets": {
+			"get": {
+				"tags": [
+					"Tickets"
+				],
+				"summary": "Retorna todos los tickets",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/components/schemas/ticketRequest"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Tickets"
+				],
+				"summary": "Crear un nuevo ticket",
+				"requestBody": {
+					"description": "Body para crear ticket",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/crearTicketBody"
+							}
+						}
+					}
+				},
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"201": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/components/schemas/id"
+						}
+					},
+					"400": {
+						"description": "Failed. Bad post data."
+					}
+				}
+			}
+		},
+		"/tickets/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"description": "ID of the ticket",
+					"type": "string"
+				}
+			],
+			"get": {
+				"tags": [
+					"Tickets"
+				],
+				"summary": "Obtener toda la información de un ticket",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "Id del ticket",
+						"schema": {
+							"$ref": "#/components/schemas/id"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Failed. Misunderstood Request."
+					},
+					"404": {
+						"description": "Failed. Ticket request not found."
+					}
+				}
+			},
+			"put": {
+				"summary": "Editar un ticket por ID",
+				"tags": [
+					"Tickets"
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "Id del ticket",
+						"schema": {
+							"$ref": "#/components/schemas/id"
+						}
+					}
+				],
+				"requestBody": {
+					"description": "Body para editar ticket",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/editarTicketBody"
+							}
+						}
+					}
+				},
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"204": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Failed. Bad post data."
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"editarTicketBody": {
+				"type": "object",
+				"properties": {
+					"nombre": {
+						"type": "string",
+						"format": "string"
+					},
+					"descripcion": {
+						"type": "string",
+						"format": "string"
+					},
+					"pasos": {
+						"type": "string",
+						"format": "string",
+						"required": false
+					},
+					"severidad": {
+						"type": "string",
+						"format": "string",
+						"enum": [
+							"Alta",
+							"Media",
+							"Baja"
+						]
+					},
+					"tipo": {
+						"type": "string",
+						"format": "email",
+						"enum": [
+							"Error",
+							"Consulta",
+							"Mejora"
+						]
+					},
+					"estado": {
+						"type": "string",
+						"format": "email",
+						"enum": [
+							"Nuevo",
+							"Esperando informacion",
+							"Cerrado",
+							"En progreso"
+						]
+					},
+					"cliente": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "number",
+								"format": "number"
+							}
+						}
+					}
+				}
+			},
+			"crearTicketBody": {
+				"type": "object",
+				"properties": {
+					"nombre": {
+						"type": "string",
+						"format": "string"
+					},
+					"descripcion": {
+						"type": "string",
+						"format": "string"
+					},
+					"severidad": {
+						"type": "string",
+						"format": "string",
+						"enum": [
+							"Alta",
+							"Media",
+							"Baja"
+						]
+					},
+					"tipo": {
+						"type": "string",
+						"format": "email",
+						"enum": [
+							"Error",
+							"Consulta",
+							"Mejora"
+						]
+					},
+					"cliente": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "number",
+								"format": "number"
+							}
+						}
+					}
+				}
+			},
+			"ticketRequest": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "number"
+					},
+					"nombre": {
+						"type": "string",
+						"format": "string"
+					},
+					"descripcion": {
+						"type": "string",
+						"format": "string"
+					},
+					"tipo": {
+						"type": "string",
+						"format": "string"
+					},
+					"estado": {
+						"type": "string",
+						"format": "string"
+					},
+					"severidad": {
+						"type": "string",
+						"format": "string"
+					},
+					"pasos": {
+						"type": "string",
+						"format": "string"
+					},
+					"id_responsable": {
+						"type": "number",
+						"format": "number"
+					},
+					"fecha_creacion": {
+						"type": "string",
+						"format": "string"
+					},
+					"fecha_limite": {
+						"type": "string",
+						"format": "string"
+					},
+					"fecha_finalizacion": {
+						"type": "string",
+						"format": "string"
+					},
+					"fecha_ultima_actualizacion": {
+						"type": "string",
+						"format": "string"
+					},
+					"cliente": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "number",
+								"format": "number"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
