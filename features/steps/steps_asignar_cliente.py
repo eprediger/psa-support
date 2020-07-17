@@ -15,8 +15,7 @@ ticket_crear = {
 cliente_a_asignar = {
     "descripcion": "Area logistica de Test",
     "razon_social": "Test S.A.",
-    "CUIT": "33-654321-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT"
+    "CUIT": "33-654321-5"
 }
 
 @given(u'I have a client and a ticket')

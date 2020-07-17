@@ -6,7 +6,7 @@ Feature: Delete a client
     """
 
     Scenario: Success delete of a client not asigned to a ticket
-        Given I have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba", fecha desde que es cliente:"12022020"
+        Given I have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba"
         When I delete the client
         Then I can see a message saying that the client was deleted succesfully
 
@@ -16,7 +16,7 @@ Feature: Delete a client
         Then I can see a warning saying that the client doesnt exist
 
     Scenario: Warning when deleteing a client that is asigned to a ticket
-        Given  I have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba", fecha desde que es cliente:"12022020" asigned to a ticket
+        Given  I have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba"
         When I delete the client
         Then I can see a warning saying that the client cant be deleted because its asigned to a ticket
 

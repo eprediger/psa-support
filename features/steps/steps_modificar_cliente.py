@@ -7,24 +7,22 @@ from settings import SEVERIDADES
 cliente_creado = {
     'razon_social' : "razon social prueba",
     'CUIT' : "123456",
-    'descripcion' : "descripcion prueba",
-    'fecha_desde_que_es_cliente' : "12022020"
+    'descripcion' : "descripcion prueba"
 }
 
 modificaciones_cliente = {
     'razon_social' : "razon social 2",
     'CUIT' : "654321",
-    'descripcion' : "descripcion modificada",
-    'fecha_desde_que_es_cliente' : "123123123"
+    'descripcion' : "descripcion modificada"
 }
 
 
-@given(u'I am an Analista de mesa de ayuda and i have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba", fecha desde que es cliente:"12022020"')
+@given(u'I am an Analista de mesa de ayuda and i have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba"')
 def step_impl(context):
     context.tc.post('/clientes', json=cliente_creado)
 
 
-@when(u'I modify the razon social por "razon social 2", CUIT:"654321", descripcion: "descripcion modificada" y fecha desde que es cliente por "123123123"')
+@when(u'I modify the razon social por "razon social 2", CUIT:"654321", descripcion: "descripcion modificada"')
 def step_impl(context):
     context.tc.put('/clientes/1', json=modificaciones_cliente)
 
@@ -34,13 +32,12 @@ def step_impl(context, CUIT):
     print(resp)
     assert resp == CUIT
 
-@when(u'I modify the razon social por "", CUIT:"", descripcion: "" y fecha desde que es cliente por ""')
+@when(u'I modify the razon social por "", CUIT:"", descripcion: ""')
 def step_impl(context):
     data = {
         'razon_social' : None,
         'CUIT' : None,
-        'descripcion' : None,
-        'fecha_desde_que_es_cliente' : None
+        'descripcion' : None
     }
     resp = context.tc.put('/clientes/1', json=data)
     context.result = resp.get_json()['mensaje']

@@ -15,15 +15,13 @@ ticket_crear = {
 cliente_a_asignar = {
     "descripcion": "Area logistica de Test1",
     "razon_social": "Cliente Asignado Test1 S.A.",
-    "CUIT": "12-456-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2016 16:58:55 GMT"
+    "CUIT": "12-456-5"
 }
 
 cliente_a_modificar = {
     "descripcion": "Area logistica de Test2",
     "razon_social": "Test2 S.A.",
-    "CUIT": "33-654321-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT"
+    "CUIT": "33-654321-5"
 }
 
 @given(u'I have a client and a ticket that already has a client loaded')

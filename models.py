@@ -86,7 +86,7 @@ class Cliente(db.Model):
     razon_social = db.Column(db.String(150), nullable=False)
     CUIT = db.Column(db.String(300), nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
-    fecha_desde_que_es_cliente = db.Column(db.String(300), nullable=False)
+    fecha_desde_que_es_cliente = db.Column(db.DateTime(timezone=True), nullable=True)
 
     def a_diccionario(self):
         '''
