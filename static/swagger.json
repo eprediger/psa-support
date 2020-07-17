@@ -59,7 +59,7 @@
             "201": {
               "description": "OK",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             },
             "400": {
@@ -90,7 +90,7 @@
               "required": true,
               "description": "Id del ticket",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             }
           ],
@@ -118,7 +118,7 @@
               "required": true,
               "description": "Id del ticket",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             }
           ],
@@ -184,7 +184,7 @@
             "201": {
               "description": "OK",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             },
             "400": {
@@ -215,7 +215,7 @@
               "required": true,
               "description": "Id del cliente",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             }
           ],
@@ -243,7 +243,7 @@
               "required": true,
               "description": "Id del client",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             }
           ],
@@ -274,6 +274,13 @@
     },
     "components": {
       "schemas": {
+        "id_ticket" : {
+          "properties":{
+            "id": {
+              "type":"string"
+            }
+          }
+        },
         "editarTicketBody": {
           "type": "object",
           "properties": {
