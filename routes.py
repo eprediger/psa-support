@@ -215,6 +215,7 @@ def editar_cliente(id):
 		razon_social = data['razon_social']
 		descripcion = data['descripcion']
 		CUIT = data['CUIT']
+		estado = data['estado']
 		#fecha_desde_que_es_cliente = data['fecha_desde_que_es_cliente']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
@@ -225,7 +226,8 @@ def editar_cliente(id):
 
 	editar_instancia(Cliente, id, razon_social=razon_social,
 					descripcion=descripcion,
-					CUIT=CUIT
+					CUIT=CUIT,
+					estado=estado
 					#fecha_desde_que_es_cliente=fecha_desde_que_es_cliente
 					)
 

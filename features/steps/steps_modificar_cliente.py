@@ -13,7 +13,8 @@ cliente_creado = {
 modificaciones_cliente = {
     'razon_social' : "razon social 2",
     'CUIT' : "654321",
-    'descripcion' : "descripcion modificada"
+    'descripcion' : "descripcion modificada",
+    'estado': 'activo'
 }
 
 

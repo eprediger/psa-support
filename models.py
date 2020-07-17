@@ -87,6 +87,8 @@ class Cliente(db.Model):
     CUIT = db.Column(db.String(300), nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
     fecha_desde_que_es_cliente = db.Column(db.DateTime(timezone=True), nullable=True)
+    estado = db.Column(db.Enum('activo', 'inactivo'), nullable=False,
+                               default='activo')
 
     def a_diccionario(self):
         '''
