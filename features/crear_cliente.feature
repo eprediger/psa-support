@@ -8,10 +8,10 @@ Feature: Create a client
 
     Scenario: Success to create a cliente
         Given I am an Analista de mesa de ayuda
-        When I create a client with razon social:"razon social prueba", descripcion:"descripcion prueba", CUIT:"12345654", fecha desde que es cliente:"12022020"
+        When I create a client with razon social:"razon social prueba", descripcion:"descripcion prueba", CUIT:"12345654"
         Then a client is created with a CUIT:"12345654"
 
     Scenario: Unsuccess to create a cliente
         Given I am an Analista de mesa de ayuda
-        When I create a client without razon social:"razon social prueba", descripcion:"descripcion prueba", CUIT:"12345654", fecha desde que es cliente:"12022020"
+        When I create a client without razon social:"razon social prueba", descripcion:"descripcion prueba", CUIT:"12345654"
         Then I see a warning that all the fields must be filled.

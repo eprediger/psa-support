@@ -12,13 +12,12 @@ ticket_crear = {
     'cliente': {'id': None}
 }
 
-@given(u'I have a client with razon social: "{razon_social}", CUIT:"{CUIT}", descripcion:"{descripcion}", fecha desde que es cliente:"{fecha_desde_que_es_cliente}"')
-def step_impl(context,razon_social,descripcion,CUIT,fecha_desde_que_es_cliente):
+@given(u'I have a client with razon social: "{razon_social}", CUIT:"{CUIT}", descripcion:"{descripcion}"')
+def step_impl(context,razon_social,descripcion,CUIT):
     data = {
         'razon_social' : razon_social,
         'descripcion' : descripcion,
-        'CUIT' : CUIT,
-        'fecha_desde_que_es_cliente' : fecha_desde_que_es_cliente
+        'CUIT' : CUIT
     }
     context.tc.post('/clientes',json=data)
 
@@ -50,13 +49,12 @@ def step_impl(context):
 def step_impl(context):
     assert context.result == "No existe el cliente solicitado"
 
-@given(u'I have a client with razon social: "{razon_social}", CUIT:"{CUIT}", descripcion:"{descripcion}", fecha desde que es cliente:"{fecha_desde_que_es_cliente}" asigned to a ticket')
-def step_impl(context, razon_social, CUIT, descripcion, fecha_desde_que_es_cliente):
+@given(u'I have a client with razon social: "{razon_social}", CUIT:"{CUIT}", descripcion:"{descripcion}" ready to delete')
+def step_impl(context, razon_social, CUIT, descripcion):
     data = {
         'razon_social' : razon_social,
         'descripcion' : descripcion,
-        'CUIT' : CUIT,
-        'fecha_desde_que_es_cliente' : fecha_desde_que_es_cliente
+        'CUIT' : CUIT
     }
     context.tc.post('/clientes',json=data)
     context.tc.post('/tickets', json=ticket_crear)

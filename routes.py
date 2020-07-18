@@ -189,7 +189,7 @@ def crear_cliente():
 		razon_social = data['razon_social']
 		descripcion = data['descripcion']
 		CUIT = data['CUIT']
-		fecha_desde_que_es_cliente = data['fecha_desde_que_es_cliente']
+		#fecha_desde_que_es_cliente = data['fecha_desde_que_es_cliente']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -197,11 +197,13 @@ def crear_cliente():
 		if data[d] == None:
 			return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
+	fecha_creacion = datetime.now(timezone('America/Argentina/Buenos_Aires'))
+
 	c = agregar_instancia(Cliente,
 						razon_social=razon_social,
 						descripcion=descripcion,
 						CUIT=CUIT,
-						fecha_desde_que_es_cliente=fecha_desde_que_es_cliente)
+						fecha_desde_que_es_cliente=fecha_creacion)
 	cliente_diccionario = c.a_diccionario()
 
 	return jsonify(cliente_diccionario), CODIGO_HTTP_OK
@@ -213,7 +215,8 @@ def editar_cliente(id):
 		razon_social = data['razon_social']
 		descripcion = data['descripcion']
 		CUIT = data['CUIT']
-		fecha_desde_que_es_cliente = data['fecha_desde_que_es_cliente']
+		estado = data['estado']
+		#fecha_desde_que_es_cliente = data['fecha_desde_que_es_cliente']
 	except:
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
@@ -224,7 +227,8 @@ def editar_cliente(id):
 	editar_instancia(Cliente, id, razon_social=razon_social,
 					descripcion=descripcion,
 					CUIT=CUIT,
-					fecha_desde_que_es_cliente=fecha_desde_que_es_cliente
+					estado=estado
+					#fecha_desde_que_es_cliente=fecha_desde_que_es_cliente
 					)
 
 	return jsonify(), CODIGO_HTTP_NO_CONTENT
