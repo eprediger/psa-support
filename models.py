@@ -99,6 +99,6 @@ class Cliente(db.Model):
             'razon_social': self.razon_social,
             'CUIT': self.CUIT,
             'descripcion': self.descripcion,
-            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente
+            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente.strftime('%d/%m/%Y')
         }
         return d
