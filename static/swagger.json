@@ -3,7 +3,7 @@
     "info": {
       "description": "Documentación de la API del módulo de Soporte de PSA",
       "version": "1.0.0",
-      "title": "PSA - Soporte",
+      "title": "PSA - Soporte"
     },
     "servers": [
       {
@@ -14,6 +14,10 @@
       {
         "name": "Tickets",
         "description": "Rutas de la API asociada a tickets"
+      },
+      {
+        "name": "Clientes",
+        "description": "Rutas de la API asociada a clientes"
       }
     ],
     "paths": {
@@ -55,7 +59,7 @@
             "201": {
               "description": "OK",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             },
             "400": {
@@ -86,7 +90,7 @@
               "required": true,
               "description": "Id del ticket",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             }
           ],
@@ -114,7 +118,7 @@
               "required": true,
               "description": "Id del ticket",
               "schema": {
-                "$ref": "#/components/schemas/id"
+                "$ref": "#/components/schemas/id_ticket"
               }
             }
           ],
@@ -141,51 +145,183 @@
             }
           }
         }
+      },
+      "/clientes": {
+        "get": {
+          "tags": [
+            "Clients"
+          ],
+          "summary": "Retorna todos los clientes",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/clientRequest"
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Clients"
+          ],
+          "summary": "Crear un nuevo cliente",
+          "requestBody": {
+            "description": "Body para crear cliente",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/crearClienteBody"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/id_ticket"
+              }
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+        }
+      },
+      "/clientes/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the cliente",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Clients"
+          ],
+          "summary": "Obtener toda la información de un cliente",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Id del cliente",
+              "schema": {
+                "$ref": "#/components/schemas/id_ticket"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Failed. Misunderstood Request."
+            },
+            "404": {
+              "description": "Failed. Ticket request not found."
+            }
+          }
+        },
+        "put": {
+          "summary": "Editar un cliente por ID",
+          "tags": [
+            "Clients"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Id del client",
+              "schema": {
+                "$ref": "#/components/schemas/id_ticket"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Body para editar cliente",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/editarClienteBody"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "204": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+        }
       }
     },
     "components": {
       "schemas": {
+        "id_ticket" : {
+          "properties":{
+            "id": {
+              "type":"string"
+            }
+          }
+        },
         "editarTicketBody": {
-            "type": "object",
-            "properties": {
-              "nombre": {
+          "type": "object",
+          "properties": {
+            "nombre": {
+              "type": "string",
+              "format": "string"
+            },
+            "descripcion": {
                 "type": "string",
                 "format": "string"
-              },
-              "descripcion": {
-                  "type": "string",
-                  "format": "string"
-              },
-              "pasos": {
+            },
+            "pasos": {
+              "type": "string",
+              "format": "string",
+              "required": false
+            },
+            "severidad": {
                 "type": "string",
                 "format": "string",
-                "required": false
+                "enum": ["Alta", "Media", "Baja"]
             },
-              "severidad": {
-                  "type": "string",
-                  "format": "string",
-                  "enum": ["Alta", "Media", "Baja"]
-              },
-              "tipo": {
-                "type": "string",
-                "format": "email",
-                "enum": ["Error", "Consulta", "Mejora"]
-              },
-              "estado": {
-                "type": "string",
-                "format": "email",
-                "enum": ["Nuevo", "Esperando informacion", "Cerrado", "En progreso"]
-              },
-              "cliente": {
-                  "type": "object",
-                  "properties": {
-                      "id": {
-                          "type": "number",
-                          "format": "number"
-                      }
-                  }
+            "tipo": {
+              "type": "string",
+              "format": "email",
+              "enum": ["Error", "Consulta", "Mejora"]
+            },
+            "estado": {
+              "type": "string",
+              "format": "email",
+              "enum": ["Nuevo", "Esperando informacion", "Cerrado", "En progreso"]
+            },
+            "cliente": {
+              "type": "object",
+              "properties": {
+                "id": {
+                    "type": "number",
+                    "format": "number"
+                }
               }
             }
+          }
         },
         "crearTicketBody": {
           "type": "object",
@@ -242,6 +378,56 @@
             
                 }
             }
+        },
+        "clientRequest": {
+          "type": "object",
+          "properties": {
+                "id": { "type": "number", "format": "number"},
+                "razon_social": { "type": "string", "format": "string"},
+                "descripcion": { "type": "string", "format": "string"},
+                "CUIT": { "type": "string", "format": "string"},
+                "fecha_desde_que_es_cliente": { "type": "string", "format": "string"}
+            }
+        },
+        "crearClienteBody": {
+          "type": "object",
+          "properties": {
+            "razon_social": {
+              "type": "string",
+              "format": "string"
+            },
+            "descripcion": {
+                "type": "string",
+                "format": "string"
+            },
+            "CUIT": {
+                "type": "string",
+                "format": "string"
+            }
+          }
+        },
+        "editarClienteBody": {
+          "type": "object",
+          "properties": {
+            "razon_social": {
+              "type": "string",
+              "format": "string"
+            },
+            "CUIT": {
+              "type": "string",
+              "format": "string"
+            },
+            "descripcion": {
+                "type": "string",
+                "format": "string"
+            },
+
+            "estado": {
+              "type": "string",
+              "format": "string",
+              "enum": ["activo", "inactivo"]
+            }
+          }
         }
       }
     }
