@@ -10,7 +10,7 @@ data_crear = {
     'severidad': 'alta',
     'tipo': 'consulta',
     'cliente': {'id': None},
-    'id_responsable': None
+    'legajo_responsable': None
 }
 
 data_editar = {
@@ -20,7 +20,7 @@ data_editar = {
     'tipo': 'consulta',
     'pasos': None,
     'estado': 'cerrado',
-    'id_responsable': None,
+    'legajo_responsable': None,
     'cliente': {'id': None}
 }
 
@@ -34,7 +34,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'id_responsable': 1,
+            'legajo_responsable': 1,
             'pasos': pasos,
             'estado': estado,
             'cliente': {'id': None }}
@@ -56,7 +56,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'id_responsable': 1,
+            'legajo_responsable': 1,
             'pasos': pasos,
             'estado': estado,
             'cliente': {'id': None }}
@@ -81,7 +81,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'id_responsable': 1,
+            'legajo_responsable': 1,
             'pasos': pasos,
             'estado': estado,
             'cliente': {'id': None }}
@@ -104,7 +104,7 @@ def step_impl(context, nombre, descripcion, tipo, severidad, estado, responsable
             'tipo': tipo,
             'severidad': severidad,
             'descripcion': descripcion,
-            'id_responsable': 1,
+            'legajo_responsable': 1,
             'pasos': pasos,
             'estado': estado,
             'cliente': {'id': None }}

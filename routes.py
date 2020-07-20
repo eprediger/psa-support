@@ -55,9 +55,9 @@ def crear_ticket():
 		pasos = None
 
 	try:
-		id_responsable = data['id_responsable']
+		legajo_responsable = data['legajo_responsable']
 	except:
-		id_responsable = None
+		legajo_responsable = None
 
 	if severidad not in SEVERIDADES.keys():
 		return jsonify({'mensaje': 'La severidad debe ser Alta, Media o Baja'}), CODIGO_HTTP_BAD_REQUEST
@@ -75,7 +75,7 @@ def crear_ticket():
 						  fecha_ultima_actualizacion=fecha_creacion,
 						  pasos=pasos,
 						  id_cliente=id_cliente,
-						  id_responsable=id_responsable)
+						  legajo_responsable=legajo_responsable)
 
 	ticket_diccionario = t.a_diccionario()
 
@@ -102,7 +102,7 @@ def editar_ticket(id_ticket):
 		pasos = None
 
 	try:
-		responsable = data['id_responsable']
+		responsable = data['legajo_responsable']
 	except:
 		responsable = None
 
@@ -148,7 +148,7 @@ def editar_ticket(id_ticket):
 						fecha_ultima_actualizacion=fecha_ultima_actualizacion,
 						fecha_limite=fecha_limite,
 						fecha_finalizacion=fecha_finalizacion,
-						id_responsable=responsable,
+						legajo_responsable=responsable,
 						pasos=pasos,
 						id_cliente=id_cliente)
 
