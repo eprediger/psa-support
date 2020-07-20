@@ -20,7 +20,7 @@ class Ticket(db.Model):
                                default='nuevo')
     severidad = db.Column(db.Enum('baja', 'media', 'alta'),
                           nullable=True)
-    id_responsable = db.Column(db.Integer, nullable=True)
+    legajo_responsable = db.Column(db.Integer, nullable=True)
     pasos = db.Column(db.String(300), nullable=True, default='')
     fecha_creacion = db.Column(db.DateTime(timezone=True), nullable=True)
     fecha_limite = db.Column(db.DateTime(timezone=True), nullable=True)
@@ -66,7 +66,7 @@ class Ticket(db.Model):
             'estado': self.estado,
             'severidad': self.severidad,
             'pasos': self.pasos,
-            'id_responsable': self.id_responsable,
+            'legajo_responsable': self.legajo_responsable,
             'fecha_creacion': fecha_creacion,
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,
@@ -99,7 +99,7 @@ class Cliente(db.Model):
             'razon_social': self.razon_social,
             'CUIT': self.CUIT,
             'descripcion': self.descripcion,
-            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente,
+            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente.strftime('%d/%m/%Y'),
             'estado': self.estado
         }
         return d

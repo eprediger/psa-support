@@ -368,7 +368,7 @@
                 "estado": { "type": "string", "format": "string"},
                 "severidad": { "type": "string", "format": "string"},
                 "pasos": { "type": "string", "format": "string"},
-                "id_responsable": { "type": "number", "format": "number"},
+                "legajo_responsable": { "type": "number", "format": "number"},
                 "fecha_creacion": { "type": "string", "format": "string"},
                 "fecha_limite": { "type": "string", "format": "string"},
                 "fecha_finalizacion": { "type": "string", "format": "string"},
@@ -378,7 +378,7 @@
                     "properties": {
                         "id": {"type": "number", "format": "number"}
                     }
-            
+
                 }
             }
         },
