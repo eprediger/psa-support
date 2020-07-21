@@ -93,7 +93,6 @@ def editar_ticket(id_ticket):
 		severidad = data['severidad'].lower()
 		id_cliente = data['cliente']['id']
 	except:
-		print('\n \n \n \n \n \n \n \n\n \n \n SISI')
 		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
 
 	try:
@@ -121,7 +120,7 @@ def editar_ticket(id_ticket):
 	if tipo not in ['error', 'consulta', 'mejora']:
 		return jsonify({'mensaje': 'El tipo de ticket debe ser Error/Consulta/Mejora'}), CODIGO_HTTP_BAD_REQUEST
 
-	if estado not in ['nuevo', 'en progreso', 'cerrado', 'esperando informaicon']:
+	if estado not in ['nuevo', 'en progreso', 'cerrado', 'esperando informacion']:
 		return jsonify({'mensaje': 'El estado de ticket debe ser Nuevo/Asignado/Cerrado'}), CODIGO_HTTP_BAD_REQUEST
 
 	fecha_ultima_actualizacion = datetime.now(timezone('America/Argentina/Buenos_Aires'))
