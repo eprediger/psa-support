@@ -8,6 +8,9 @@
     "servers": [
       {
         "url": "/"
+      },
+      {
+        "url": "https://psa-api-support.herokuapp.com"
       }
     ],
     "tags": [
