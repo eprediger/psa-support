@@ -5,17 +5,13 @@ import tempfile
 
 from behave import given
 
-#Fiddly
-#fuente: https://stackoverflow.com/questions/33067785/bdd-behave-selenium-python-error-no-module-named-pages-when-i-run-my-feature-tes
-import imp
-app = imp.load_source('app', '../app.py')
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir) 
+
 from app import create_app
-
-config = imp.load_source('config', '../main/config.py')
-from config import config
-
-#from ..app import create_app
-#from ..main.config import config
+from main.config import config
 
 
 @given(u'I am an Analista de mesa de ayuda')

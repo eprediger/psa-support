@@ -8,6 +8,7 @@ from main.db.database import (agregar_instancia, editar_instancia, eliminar_inst
                       obtener_instancias_por_filtro,
                       obtener_todas_las_instancias, obtener_una_instancia)
 from main.models.Cliente import Cliente
+from main.models.Ticket import Ticket
 from main.settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
                       CODIGO_HTTP_NOT_FOUND, CODIGO_HTTP_OK, SEVERIDADES)
 

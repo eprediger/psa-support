@@ -11,6 +11,7 @@ from main.models.Ticket import Ticket
 from main.settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
                       CODIGO_HTTP_NOT_FOUND, CODIGO_HTTP_OK, SEVERIDADES)
 
+
 tickets = Blueprint('tickets', __name__)
 
 @tickets.route('/tickets', methods=['GET'])
