@@ -4,11 +4,11 @@ from flask import jsonify, request
 from flask.blueprints import Blueprint
 from pytz import timezone
 
-from database import (agregar_instancia, editar_instancia, eliminar_instancia,
+from main.db.database import (agregar_instancia, editar_instancia, eliminar_instancia,
                       obtener_instancias_por_filtro,
                       obtener_todas_las_instancias, obtener_una_instancia)
-from models import Ticket
-from settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
+from main.models.Ticket import Ticket
+from main.settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
                       CODIGO_HTTP_NOT_FOUND, CODIGO_HTTP_OK, SEVERIDADES)
 
 tickets = Blueprint('tickets', __name__)

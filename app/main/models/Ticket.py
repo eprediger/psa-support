@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
-from database import db, editar_instancia
+from main.db.database import db, editar_instancia
 
 
 class Ticket(db.Model):

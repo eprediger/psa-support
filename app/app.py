@@ -1,8 +1,8 @@
-from app.main.config import config
-from app.main.controller.clientes_controller import clientes
-from app.main.controller.tickets_controller import tickets
-from app.main.db.database import db
-from app.main.settings import SWAGGER_URL, SWAGGERUI_BLUEPRINT
+from main.config import config
+from main.controller.clientes_controller import clientes
+from main.controller.tickets_controller import tickets
+from main.db.database import db
+from main.settings import SWAGGER_URL, SWAGGERUI_BLUEPRINT
 
 from decouple import config as config_decouple
 from flask import Flask
