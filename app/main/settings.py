@@ -6,6 +6,8 @@ CODIGO_HTTP_NO_CONTENT = 204
 CODIGO_HTTP_NOT_FOUND = 404
 CODIGO_HTTP_BAD_REQUEST = 400
 
+URL_PROYECTOS = 'https://mapache-proyectos.herokuapp.com/'
+
 SEVERIDADES = {
     'alta': 7,
     'media': 30,

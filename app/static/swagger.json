@@ -149,6 +149,48 @@
           }
         }
       },
+      "/tickets/{id}/tareas": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID del ticket",
+            "type": "string"
+          }
+        ],
+        "post": {
+          "tags": [
+            "Tickets"
+          ],
+          "summary": "Crear tarea a partir de ticket",
+          "requestBody": {
+            "description": "Body para una asociacion entre tarea y ticket",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ticketTareaBody"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/id_ticket"
+              }
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+        }
+      },
       "/clientes": {
         "get": {
           "tags": [
@@ -356,6 +398,13 @@
                     }
                 }
             }
+          }
+        },
+        "ticketTareaBody": {
+          "type": "object",
+          "properties": {
+            "id_tarea": {"type": "number", "format": "number"},
+            "id_proyecto": {"type": "number", "format": "number"}
           }
         },
         "ticketRequest": {

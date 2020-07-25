@@ -1,7 +1,8 @@
+import requests
+
 from flask_sqlalchemy import SQLAlchemy
-
 from main.db.database import db, editar_instancia
-
+from main.settings import URL_PROYECTOS
 
 class Ticket(db.Model):
     """
@@ -58,6 +59,15 @@ class Ticket(db.Model):
         else:
             cliente = None
 
+        tareas = []
+        if self.tareas:
+            tareas = []
+            for tarea in self.tareas:
+                url = URL_PROYECTOS + f'/proyectos/{tarea.id_proyecto}/tareas/{tarea.id_tarea}'
+                r = requests.get(url)
+                json = r.json()
+                tareas.append({'id_tarea': json['id'], 'nombre': json['nombre'], 'id_proyecto': tarea.id_proyecto})
+
         d = {
             'id': self.id,
             'nombre': self.nombre,
@@ -71,6 +81,7 @@ class Ticket(db.Model):
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,
             'fecha_ultima_actualizacion': fecha_actualizacion,
-            'cliente' : cliente
+            'cliente' : cliente,
+            'tareas': tareas
         }
         return d

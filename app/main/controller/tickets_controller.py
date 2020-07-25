@@ -8,6 +8,7 @@ from main.db.database import (agregar_instancia, editar_instancia, eliminar_inst
                       obtener_instancias_por_filtro,
                       obtener_todas_las_instancias, obtener_una_instancia)
 from main.models.Ticket import Ticket
+from main.models.TicketTarea import TicketTarea
 from main.settings import (CODIGO_HTTP_BAD_REQUEST, CODIGO_HTTP_NO_CONTENT,
                       CODIGO_HTTP_NOT_FOUND, CODIGO_HTTP_OK, SEVERIDADES)
 
@@ -166,3 +167,22 @@ def archivar_ticket(id_ticket):
 
 	eliminar_instancia(Ticket, id=id_ticket)
 	return jsonify({'mensaje': 'Ticket archivado con exito!'}), CODIGO_HTTP_OK
+
+
+@tickets.route('/tickets/<int:id_ticket>/tareas', methods=['POST'])
+def crear_tarea_derivada(id_ticket):
+	ticket = obtener_una_instancia(Ticket, id=id_ticket)
+
+	if not ticket:
+		return jsonify({'mensaje': 'No existe el ticket solicitado'}), CODIGO_HTTP_NOT_FOUND
+	
+	try:
+		data = request.get_json()
+		id_tarea = data['id_tarea']
+		id_proyecto = data['id_proyecto']
+	except:
+		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP_BAD_REQUEST
+	
+	agregar_instancia(TicketTarea, id_ticket=id_ticket, id_tarea=id_tarea, id_proyecto=id_proyecto)
+
+	return jsonify({'mensaje': "Tarea asociada a ticket exitosamente"}), CODIGO_HTTP_OK
