@@ -33,7 +33,7 @@ def obtener_tickets():
 def obtener_ticket(id):
 	try:
 		ticket = obtener_una_instancia(Ticket, id=id)
-		return jsonify(ticket.a_diccionario()), CODIGO_HTTP_OK
+		return jsonify(ticket.a_diccionario(incluir_tareas=True)), CODIGO_HTTP_OK
 	except:
 		return jsonify({'mensaje': 'Ticket no encontrado'}), CODIGO_HTTP_BAD_REQUEST
 

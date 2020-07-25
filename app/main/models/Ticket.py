@@ -34,7 +34,7 @@ class Ticket(db.Model):
                            nullable=True)
     cliente = db.relationship('Cliente', backref='cliente')
 
-    def a_diccionario(self):
+    def a_diccionario(self, incluir_tareas=False):
         ''' Retorna el diccionario de la instancia
         '''
         if self.fecha_limite:
@@ -60,7 +60,7 @@ class Ticket(db.Model):
             cliente = None
 
         tareas = []
-        if self.tareas:
+        if incluir_tareas and self.tareas:
             tareas = []
             for tarea in self.tareas:
                 url = URL_PROYECTOS + f'/proyectos/{tarea.id_proyecto}/tareas/{tarea.id_tarea}'
