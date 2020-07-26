@@ -15,9 +15,6 @@ Feature: Delete a client
         When I delete the client 1
         Then I can see a warning saying that the client doesnt exist
 
-    Scenario: Warning when deleteing a client that is asigned to a ticket
-        Given  I have a client with razon social: "razon social prueba", CUIT:"123456", descripcion:"descripcion prueba"
-        When I delete the client
-        Then I can see a warning saying that the client cant be deleted because its asigned to a ticket
+
 
 
