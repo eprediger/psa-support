@@ -23,8 +23,8 @@ class ProductionConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-config = {
-    'development': DevelopmentConfig,
-    'featureTest': FeatureTestingConfig,
-    'production': ProductionConfig
-}
+config = dict(
+    development=DevelopmentConfig,
+    featureTest=FeatureTestingConfig,
+    production=ProductionConfig
+)

@@ -1,10 +1,15 @@
 from flask_swagger_ui import get_swaggerui_blueprint
 
 
-CODIGO_HTTP_OK = 200
-CODIGO_HTTP_NO_CONTENT = 204
-CODIGO_HTTP_NOT_FOUND = 404
-CODIGO_HTTP_BAD_REQUEST = 400
+CODIGO_HTTP = {
+	'OK': 200,
+	'CREATED': 201,
+	'NO_CONTENT': 204,
+	'NOT_FOUND': 404,
+	'BAD_REQUEST': 400
+}
+
+URL_PROYECTOS = 'https://mapache-proyectos.herokuapp.com/'
 
 SEVERIDADES = {
     'alta': 7,

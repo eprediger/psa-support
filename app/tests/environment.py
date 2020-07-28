@@ -5,8 +5,13 @@ import tempfile
 
 from behave import given
 
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir) 
+
 from app import create_app
-from config import config
+from main.config import config
 
 
 @given(u'I am an Analista de mesa de ayuda')

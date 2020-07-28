@@ -1,10 +1,19 @@
+from main.config import config
+from main.controller.clientes_controller import clientes
+from main.controller.tickets_controller import tickets
+from main.db.database import db
+from main.settings import SWAGGER_URL, SWAGGERUI_BLUEPRINT
+
 from decouple import config as config_decouple
 from flask import Flask
 from flask_cors import CORS
+<<<<<<< HEAD:app.py
 from config import config
 from database import db
 from routes import clientes, tickets
 from settings import SWAGGERUI_BLUEPRINT, SWAGGER_URL
+=======
+>>>>>>> develop:app/app.py
 
 
 def create_app(env):

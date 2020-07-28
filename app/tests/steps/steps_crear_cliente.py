@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from behave import given, then, when
 
-from settings import SEVERIDADES
+from main.settings import SEVERIDADES
 
 
 @when(u'I create a client with razon social:"{razon_social}", descripcion:"{descripcion}", CUIT:"{CUIT}"')

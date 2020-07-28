@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from behave import given, then, when
 
-from settings import SEVERIDADES
+from main.settings import SEVERIDADES
 
 data_crear = {
     'nombre': 'test',
@@ -19,8 +19,9 @@ data_editar = {
     'tipo': 'consulta',
     'pasos': None,
     'estado': 'cerrado',
-    'responsable': None,
-    'cliente': {'id': None}
+    'legajo_responsable': None,
+    'cliente': {'id': None},
+    'tareas' : []
 }
 
 

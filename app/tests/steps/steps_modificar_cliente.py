@@ -2,19 +2,29 @@ from datetime import datetime, timedelta
 
 from behave import given, then, when
 
-from settings import SEVERIDADES
+from main.settings import SEVERIDADES
 
 cliente_creado = {
     'razon_social' : "razon social prueba",
     'CUIT' : "123456",
+<<<<<<< HEAD:features/steps/steps_modificar_cliente.py
     'descripcion' : "descripcion prueba"
+=======
+    'descripcion' : "descripcion prueba",
+    'fecha_desde_que_es_cliente' : "Wed, 10 Jul 2016 16:58:55 GMT"
+>>>>>>> develop:app/tests/steps/steps_modificar_cliente.py
 }
 
 modificaciones_cliente = {
     'razon_social' : "razon social 2",
     'CUIT' : "654321",
     'descripcion' : "descripcion modificada",
+<<<<<<< HEAD:features/steps/steps_modificar_cliente.py
     'estado': 'activo'
+=======
+    'fecha_desde_que_es_cliente' : "Wed, 10 Jul 2016 16:58:55 GMT",
+    "estado":"activo"
+>>>>>>> develop:app/tests/steps/steps_modificar_cliente.py
 }
 
 

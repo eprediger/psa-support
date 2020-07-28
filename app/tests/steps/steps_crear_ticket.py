@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from behave import given, then, when
 
-from settings import SEVERIDADES
+from main.settings import SEVERIDADES
 
 
 @when(u'I create a ticket with nombre "{nombre}", descripcion "{descripcion}", tipo "{tipo}", severidad "{severidad}"')
@@ -39,6 +39,7 @@ def step_impl(context, descripcion, tipo, severidad):
 @then(u'I recive a warning because there is information that is missing')
 def step_impl(context):
     print(u'STEP: Then I recive a warning because there is information that is missing')
+    print(context.result)
     assert context.result == "Parametros invalidos"
 
 @then(u'I recive a warning because there is a wrong value at severidad')
