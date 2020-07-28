@@ -38,8 +38,17 @@ def crear_cliente():
 
 @clientes.route('/clientes/<int:id>', methods=['PUT'])
 def editar_cliente(id):
+
 	try:
 		data = request.get_json()
+		razon_social = data['razon_social']
+		descripcion = data['descripcion']
+		CUIT = data['CUIT']
+		estado = data['estado']
+	except:
+		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP["BAD_REQUEST"]
+
+	try:
 		for d in data:
 			if data[d] == None:
 				return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP["BAD_REQUEST"]

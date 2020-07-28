@@ -67,9 +67,6 @@ def editar(id, ticket_editado):
 	
 	estado = ticket_editado['estado'].lower()
 
-
-
-
 	if ticket_almacenado.estado == 'cerrado':
 		raise Exception('El ticket ya fue cerrado previamente')
 

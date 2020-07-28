@@ -8,14 +8,15 @@ cliente_creado = {
     'razon_social' : "razon social prueba",
     'CUIT' : "123456",
     'descripcion' : "descripcion prueba",
-    'fecha_desde_que_es_cliente' : "12022020"
+    'fecha_desde_que_es_cliente' : "Wed, 10 Jul 2016 16:58:55 GMT"
 }
 
 modificaciones_cliente = {
     'razon_social' : "razon social 2",
     'CUIT' : "654321",
     'descripcion' : "descripcion modificada",
-    'fecha_desde_que_es_cliente' : "123123123"
+    'fecha_desde_que_es_cliente' : "Wed, 10 Jul 2016 16:58:55 GMT",
+    "estado":"activo"
 }
 
 

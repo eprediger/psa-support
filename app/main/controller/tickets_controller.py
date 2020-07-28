@@ -31,7 +31,15 @@ def obtener_ticket(id):
 def crear_ticket():
 	try:
 		data = request.get_json()
-
+		nombre = data['nombre']
+		descripcion = data['descripcion']
+		tipo = data['tipo'].lower()
+		severidad = data['severidad'].lower()
+		id_cliente = data['cliente']['id']
+	except:
+		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP["BAD_REQUEST"]
+	
+	try:
 		ticket = crear(data)
 
 		return jsonify(ticket), CODIGO_HTTP["OK"]

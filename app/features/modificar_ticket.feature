@@ -12,7 +12,7 @@ Feature: Modify a ticket
     Scenario: Invalid estado
         Given I am an Analista de mesa de ayuda
         When I ask to modify the ticket with nombre "ticketprueba", descripcion "descripcion prueba", tipo "Error", severidad "Alta", estado "Falso", responsable "Gaston Parente", pasos "Paso 1, 2 y 3"
-        Then I get a message saying "El estado de ticket debe ser Nuevo/Asignado/Cerrado"
+        Then I get a message saying "El estado de ticket debe ser Nuevo/Asignado/Cerrado/Esperando Informacion"
     
     Scenario: Invalid tipo
         Given I am an Analista de mesa de ayuda

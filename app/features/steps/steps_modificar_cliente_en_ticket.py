@@ -23,7 +23,8 @@ cliente_a_modificar = {
     "descripcion": "Area logistica de Test2",
     "razon_social": "Test2 S.A.",
     "CUIT": "33-654321-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT"
+    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT",
+    "estado":"activo"
 }
 
 @given(u'I have a client and a ticket that already has a client loaded')
