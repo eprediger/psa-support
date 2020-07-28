@@ -21,13 +21,7 @@ cliente_a_asignar = {
 cliente_a_modificar = {
     "descripcion": "Area logistica de Test2",
     "razon_social": "Test2 S.A.",
-<<<<<<< HEAD:features/steps/steps_modificar_cliente_en_ticket.py
     "CUIT": "33-654321-5"
-=======
-    "CUIT": "33-654321-5",
-    "fecha_desde_que_es_cliente": "Wed, 10 Jul 2019 16:58:55 GMT",
-    "estado":"activo"
->>>>>>> develop:app/tests/steps/steps_modificar_cliente_en_ticket.py
 }
 
 @given(u'I have a client and a ticket that already has a client loaded')

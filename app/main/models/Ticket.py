@@ -81,40 +81,6 @@ class Ticket(db.Model):
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,
             'fecha_ultima_actualizacion': fecha_actualizacion,
-<<<<<<< HEAD:models.py
             'cliente' : cliente
-        }
-        return d
-
-class Cliente(db.Model):
-    """
-    Clase que define la tabla Cliente
-    """
-
-    __tablename__ = 'clientes'
-
-    id = db.Column(db.Integer, primary_key=True)
-    razon_social = db.Column(db.String(150), nullable=False)
-    CUIT = db.Column(db.String(300), nullable=False)
-    descripcion = db.Column(db.String(300), nullable=False)
-    fecha_desde_que_es_cliente = db.Column(db.DateTime(timezone=True), nullable=True)
-    estado = db.Column(db.Enum('activo', 'inactivo'), nullable=False,
-                               default='activo')
-
-    def a_diccionario(self):
-        '''
-        Retorna el diccionario de la instancia
-        '''
-        d = {
-            'id': self.id,
-            'razon_social': self.razon_social,
-            'CUIT': self.CUIT,
-            'descripcion': self.descripcion,
-            'fecha_desde_que_es_cliente': self.fecha_desde_que_es_cliente.strftime('%d/%m/%Y'),
-            'estado': self.estado
-=======
-            'cliente' : cliente,
-            'tareas': tareas
->>>>>>> develop:app/main/models/Ticket.py
         }
         return d
