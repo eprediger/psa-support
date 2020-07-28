@@ -40,9 +40,19 @@ def crear_ticket():
 
 @tickets.route('/tickets/<int:id_ticket>', methods=['PUT'])
 def editar_ticket(id_ticket):
+
 	try:
 		data = request.get_json()
+		nombre = data['nombre']
+		descripcion = data['descripcion']
+		tipo = data['tipo'].lower()
+		estado = data['estado'].lower()
+		severidad = data['severidad'].lower()
+		id_cliente = data['cliente']['id']
+	except:
+		return jsonify({'mensaje': 'Parametros invalidos'}), CODIGO_HTTP["BAD_REQUEST"]
 
+	try:
 		editar(id_ticket, data)
 
 		return jsonify(), CODIGO_HTTP["NO_CONTENT"]

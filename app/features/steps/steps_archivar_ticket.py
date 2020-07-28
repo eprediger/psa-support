@@ -19,8 +19,9 @@ data_editar = {
     'tipo': 'consulta',
     'pasos': None,
     'estado': 'cerrado',
-    'responsable': None,
-    'cliente': {'id': None}
+    'legajo_responsable': None,
+    'cliente': {'id': None},
+    'tareas' : []
 }
 
 

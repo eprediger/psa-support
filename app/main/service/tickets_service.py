@@ -54,26 +54,32 @@ def crear(ticket):
 	return ticket.a_diccionario()
 
 def editar(id, ticket_editado):
-	ticket_almacenado = obtener_ticket_por(id)
+
+	ticket_almacenado = obtener_una_instancia(Ticket, id=id)
 
 	if not ticket_almacenado:
 		raise Exception("No existe el ticket solicitado")
 
-	id_cliente = ticket_editado["cliente"]["id"]
+	id_cliente = ticket_editado['cliente']['id']
+
 	pasos = ticket_editado.get('pasos')
 	responsable = ticket_editado.get('legajo_responsable')
-
+	
 	estado = ticket_editado['estado'].lower()
 
-	if ticket_editado["estado"] and ticket_editado["estado"].lower() == 'cerrado':
+
+
+
+	if ticket_almacenado.estado == 'cerrado':
 		raise Exception('El ticket ya fue cerrado previamente')
 
 	if estado not in ['nuevo', 'en progreso', 'cerrado', 'esperando informacion']:
-		raise Exception('El estado de ticket debe ser Nuevo/Asignado/Cerrado')
+		raise Exception('El estado de ticket debe ser Nuevo/Asignado/Cerrado/Esperando Informacion')
 	# , CODIGO_HTTP["BAD_REQUEST"]
 
 	fecha_ultima_actualizacion = datetime.now(timezone('America/Argentina/Buenos_Aires'))
-	if estado == 'cerrado' and ticket_almacenado["estado"] != 'cerrado':
+
+	if estado == 'cerrado' and ticket_almacenado.estado != 'cerrado':
 		# Si cambio al estado cerrado, se coloca la fecha de finalización.
 		fecha_finalizacion = fecha_ultima_actualizacion
 	else:
@@ -83,11 +89,11 @@ def editar(id, ticket_editado):
 	if severidad not in SEVERIDADES.keys():
 		raise Exception('La severidad debe ser Alta, Media o Baja')
 
-	if severidad != ticket["severidad"]:
+	if severidad != ticket_almacenado.severidad:
 		# Si cambiaron la severidad del ticket, se actualiza la fecha limite.
-		fecha_limite = ticket["fecha_creacion"] + timedelta(days=SEVERIDADES[severidad.lower()])
+		fecha_limite = ticket_almacenado.fecha_creacion + timedelta(days=SEVERIDADES[severidad.lower()])
 	else:
-		fecha_limite = ticket["fecha_limite"]
+		fecha_limite = ticket_almacenado.fecha_limite
 
 	tipo = ticket_editado['tipo'].lower()
 

@@ -20,7 +20,7 @@ data_editar = {
     'tipo': 'consulta',
     'pasos': None,
     'estado': 'cerrado',
-    'id_responsable': None,
+    'legajo_responsable': None,
     'cliente': {'id': None}
 }
 
