@@ -1,2 +1,2 @@
 [behave]
-paths = app/features
+paths = app/tests
