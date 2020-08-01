@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
-
 from pytz import timezone
+
+from sqlalchemy import func
 
 from main.db.database import (agregar_instancia, editar_instancia,
                               eliminar_instancia,
@@ -127,3 +128,26 @@ def archivar(id):
 	# , CODIGO_HTTP["BAD_REQUEST"]
 
 	eliminar_instancia(Ticket, id=id)
+
+def obtener_data_diaria():
+
+	tickets_cerrados = Ticket.query.with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_finalizacion), func.count(Ticket.id)).filter(Ticket.fecha_finalizacion!=None)\
+		.group_by(func.strftime("%Y-%m-%d", Ticket.fecha_finalizacion)).all()
+	tickets_cerrados = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_cerrados]
+	tickets_abiertos = Ticket.query.with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).group_by(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).all()
+	tickets_abiertos = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_abiertos]
+	return(tickets_cerrados, tickets_abiertos)
+
+def obtener_data_acumulada():
+
+	fechas_altas_tickets = Ticket.query.with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).distinct().all()
+	fechas = []
+	for fecha in fechas_altas_tickets:
+		print(fecha)
+		fecha_max = datetime.strptime(fecha[0], "%Y-%m-%d")
+		fecha_max = fecha_max + timedelta(days=1)
+
+		cantidad_tickets = Ticket.query.with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).filter(Ticket.fecha_creacion < fecha_max).first()
+		print(cantidad_tickets)
+		fechas.append({'fecha':fecha[0], 'cantidad': cantidad_tickets[1]})
+	return(fechas)

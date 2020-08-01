@@ -3,7 +3,7 @@ from flask.blueprints import Blueprint
 
 from main.service.tareas_service import crear_tarea
 from main.service.tickets_service import (archivar, crear, editar,
-                                          obtener_ticket_por)
+                                          obtener_ticket_por, obtener_data_diaria, obtener_data_acumulada)
 from main.service.tickets_service import \
     obtener_tickets as obtener_tickets_service
 from main.settings import CODIGO_HTTP
@@ -87,3 +87,14 @@ def crear_tarea_derivada(id_ticket):
 		return jsonify({'mensaje': "Tarea asociada a ticket exitosamente"}), CODIGO_HTTP["OK"]
 	except Exception as e:
 		return jsonify({'mensaje': str(e)}), CODIGO_HTTP["BAD_REQUEST"]
+
+@tickets.route('/tickets/data_diaria', methods=['GET'])
+def data_diaria():
+	tickets_cerrados, tickets_abiertos = obtener_data_diaria()
+	return {'tickets_cerrados' : tickets_cerrados, 'tickets_abiertos' : tickets_abiertos}
+
+
+
+@tickets.route('/tickets/data_acumulada', methods=['GET'])
+def data_acumulada():
+	return jsonify(obtener_data_acumulada())
