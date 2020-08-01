@@ -191,6 +191,38 @@
           }
         }
       },
+      "/tickets/data_diaria":{
+        "get": {
+          "tags": [
+            "Tickets"
+          ],
+          "summary": "Retorna los valores de cantidad de tickets creados y cerrados por dia",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/ticketRequest"
+              }
+            }
+          }
+        }
+      },
+      "/tickets/data_acumulada":{
+        "get": {
+          "tags": [
+            "Tickets"
+          ],
+          "summary": "Retorna los valores de cantidad de tickets abiertos acumulados por dia",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/ticketRequest"
+              }
+            }
+          }
+        }
+      },
       "/clientes": {
         "get": {
           "tags": [
