@@ -81,6 +81,7 @@ class Ticket(db.Model):
             'fecha_limite': fecha_limite,
             'fecha_finalizacion': fecha_finalizacion,
             'fecha_ultima_actualizacion': fecha_actualizacion,
-            'cliente' : cliente
+            'cliente' : cliente,
+            'tareas': tareas
         }
         return d
