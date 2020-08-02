@@ -61,7 +61,6 @@ class Ticket(db.Model):
 
         tareas = []
         if incluir_tareas and self.tareas:
-            tareas = []
             for tarea in self.tareas:
                 url = URL_PROYECTOS + f'/proyectos/{tarea.id_proyecto}/tareas/{tarea.id_tarea}'
                 r = requests.get(url)
