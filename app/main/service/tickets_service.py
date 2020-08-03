@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from pytz import timezone
-
+from random import randint, uniform,random
 from sqlalchemy import func
 
 from main.db.database import (agregar_instancia, editar_instancia,
@@ -103,6 +103,19 @@ def editar(id, ticket_editado):
 		# Solo los tickets de tipo error llevan pasos
 		pasos = None
 
+#Codigo para la creacion de tickets que den datos a los graficos
+	try:
+		fecha_creacion = ticket_editado['fecha_creacion']
+		fecha_creacion = datetime.strptime(fecha_creacion, '%Y-%m-%d %H:%M:%S')
+	except:
+		fecha_creacion = None
+	
+	try:
+		fecha_finalizacion = ticket_editado['fecha_finalizacion']
+		fecha_finalizacion = datetime.strptime(fecha_finalizacion, '%Y-%m-%d %H:%M:%S')
+	except:
+		pass
+
 	editar_instancia(Ticket, id,
 						nombre=ticket_editado["nombre"],
 						descripcion=ticket_editado["descripcion"],
@@ -114,7 +127,9 @@ def editar(id, ticket_editado):
 						fecha_finalizacion=fecha_finalizacion,
 						legajo_responsable=responsable,
 						pasos=pasos,
+						fecha_creacion=fecha_creacion,
 						id_cliente=id_cliente)
+# Fin de codigo para la creacion de tickets que den datos a los graficos
 
 def archivar(id):
 	ticket = obtener_una_instancia(Ticket, id=id)
@@ -143,11 +158,11 @@ def obtener_data_acumulada():
 	fechas_altas_tickets = Ticket.query.with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).distinct().all()
 	fechas = []
 	for fecha in fechas_altas_tickets:
-		print(fecha)
 		fecha_max = datetime.strptime(fecha[0], "%Y-%m-%d")
 		fecha_max = fecha_max + timedelta(days=1)
-
 		cantidad_tickets = Ticket.query.with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).filter(Ticket.fecha_creacion < fecha_max).first()
-		print(cantidad_tickets)
 		fechas.append({'fecha':fecha[0], 'cantidad': cantidad_tickets[1]})
 	return(fechas)
+
+def crear_data_relleno():
+	return None

@@ -3,7 +3,7 @@ from flask.blueprints import Blueprint
 
 from main.service.tareas_service import crear_tarea
 from main.service.tickets_service import (archivar, crear, editar,
-                                          obtener_ticket_por, obtener_data_diaria, obtener_data_acumulada)
+                                          obtener_ticket_por, obtener_data_diaria, obtener_data_acumulada, crear_data_relleno)
 from main.service.tickets_service import \
     obtener_tickets as obtener_tickets_service
 from main.settings import CODIGO_HTTP
