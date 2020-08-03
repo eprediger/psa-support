@@ -168,7 +168,6 @@ def obtener_data_acumulada():
 							with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).\
 							filter(Ticket.fecha_creacion < fecha_max).first()
 		fechas.append({'fecha':fecha[0], 'cantidad': cantidad_tickets[1]})
-	return(fechas)
 
-def crear_data_relleno():
-	return None
+	fechas.sort(key=lambda x: x["fecha"])
+	return(fechas)
