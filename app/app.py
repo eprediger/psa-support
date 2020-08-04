@@ -31,7 +31,7 @@ def create_app(env):
         > from main.db.database import db
         > db.create_all()
         """
-        # db.create_all()
+        db.create_all()
 
     return app
 
