@@ -21,6 +21,16 @@ def create_app(env):
 
     with app.app_context():
         db.init_app(app)
+        """
+        TEORIA:
+        - Heroku apaga el proceso por inactividad.
+         Al invocar un servicio, se ejecuta este método, crea tablas que ya existen y pincha.
+
+        Si se borra la base:
+        heroku run python
+        > from main.db.database import db
+        > db.create_all()
+        """
         db.create_all()
 
     return app

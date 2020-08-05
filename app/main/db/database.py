@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from sqlalchemy import text
 
 db = SQLAlchemy()
 
@@ -59,8 +59,11 @@ def agregar_y_commitear(*args):
 
     commitear_cambios()
 
-def obtener_todas_las_instancias(model):
-    instancias = model.query.all()
+def obtener_todas_las_instancias(model, ordenClave=None):
+    if ordenClave:
+        instancias = model.query.order_by(text(f"{ordenClave} desc")).all()
+    else:
+        instancias = model.query.all()
     return instancias
 
 def obtener_una_instancia(model, **kwargs):

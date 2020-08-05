@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from pytz import timezone
 from random import randint, uniform,random
 from sqlalchemy import func
@@ -18,7 +18,7 @@ def obtener_tickets(query_params):
 	if query_params:
 		tickets = obtener_instancias_por_filtro(Ticket, **query_params)
 	else:
-		tickets = obtener_todas_las_instancias(Ticket)
+		tickets = obtener_todas_las_instancias(Ticket, "fecha_creacion")
 
 	return [t.a_diccionario() for t in tickets]
 
@@ -65,7 +65,7 @@ def editar(id, ticket_editado):
 
 	pasos = ticket_editado.get('pasos')
 	responsable = ticket_editado.get('legajo_responsable')
-	
+
 	estado = ticket_editado['estado'].lower()
 
 	if ticket_almacenado.estado == 'cerrado':
@@ -109,7 +109,7 @@ def editar(id, ticket_editado):
 		fecha_creacion = datetime.strptime(fecha_creacion, '%Y-%m-%d %H:%M:%S')
 	except:
 		fecha_creacion = None
-	
+
 	try:
 		fecha_finalizacion = ticket_editado['fecha_finalizacion']
 		fecha_finalizacion = datetime.strptime(fecha_finalizacion, '%Y-%m-%d %H:%M:%S')
@@ -144,30 +144,64 @@ def archivar(id):
 
 	eliminar_instancia(Ticket, id=id)
 
+def completar_ceros(tickets):
+	if len(tickets) > 0:
+		stringFechaInicio = tickets[0]["fecha"]
+		anio, mes, dia = stringFechaInicio.split("-")
+
+		fechaInicio = date(int(anio), int(mes), int(dia))
+		fechaFin = date.today()
+		delta = fechaFin - fechaInicio
+
+		for i in range(delta.days + 1):
+			dia = fechaInicio + timedelta(days=i)
+			diaString = dia.strftime("%Y-%m-%d")
+			if diaString not in [ ticket['fecha'] for ticket in tickets ]:
+				tickets.append({'fecha': diaString, 'cantidad': 0})
+
+		tickets.sort(key=lambda x: x["fecha"])
+
+	return tickets
+
 def obtener_data_diaria():
 	tickets_cerrados = Ticket.query.\
 						with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_finalizacion), func.count(Ticket.id)).\
 						filter(Ticket.fecha_finalizacion!=None)\
 						.group_by(func.strftime("%Y-%m-%d", Ticket.fecha_finalizacion)).all()
 	tickets_cerrados = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_cerrados]
+	tickets_cerrados = completar_ceros(tickets_cerrados)
+
 	tickets_abiertos = Ticket.query.\
 						with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).\
 						group_by(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).all()
 	tickets_abiertos = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_abiertos]
-	return(tickets_cerrados, tickets_abiertos)
+	tickets_abiertos = completar_ceros(tickets_abiertos)
+
+	return tickets_cerrados, tickets_abiertos
 
 def obtener_data_acumulada():
 	fechas_altas_tickets = Ticket.query.\
 							with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).\
-							distinct().all()
-	fechas = []
+							distinct().\
+							order_by(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).all()
+	acumulado_tickets_creados = []
+
 	for fecha in fechas_altas_tickets:
 		fecha_max = datetime.strptime(fecha[0], "%Y-%m-%d")
 		fecha_max = fecha_max + timedelta(days=1)
 		cantidad_tickets = Ticket.query.\
 							with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).\
 							filter(Ticket.fecha_creacion < fecha_max).first()
-		fechas.append({'fecha':fecha[0], 'cantidad': cantidad_tickets[1]})
+		acumulado_tickets_creados.append({'fecha':fecha[0], 'cantidad': cantidad_tickets[1]})
 
-	fechas.sort(key=lambda x: x["fecha"])
-	return(fechas)
+	acumulado_tickets_creados = completar_ceros(acumulado_tickets_creados)
+
+	if len(acumulado_tickets_creados) > 0:
+		acumulado_dia_anterior = acumulado_tickets_creados[0]["cantidad"]
+		for fecha in acumulado_tickets_creados:
+			if fecha["cantidad"] == 0:
+				fecha["cantidad"] = acumulado_dia_anterior
+			else:
+				acumulado_dia_anterior = fecha["cantidad"]
+
+	return acumulado_tickets_creados
