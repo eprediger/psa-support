@@ -1,9 +1,10 @@
 from flask import jsonify, request
 from flask.blueprints import Blueprint
 
-from main.service.tareas_service import crear_tarea
+from main.service.tareas_service import crear_tarea, eliminar_asociaciones
 from main.service.tickets_service import (archivar, crear, editar,
-                                          obtener_ticket_por, obtener_data_diaria, obtener_data_acumulada)
+                                          obtener_ticket_por, obtener_data_diaria,
+										  obtener_data_acumulada)
 from main.service.tickets_service import \
     obtener_tickets as obtener_tickets_service
 from main.settings import CODIGO_HTTP
@@ -62,7 +63,6 @@ def editar_ticket(id_ticket):
 
 	try:
 		editar(id_ticket, data)
-
 		return jsonify(), CODIGO_HTTP["NO_CONTENT"]
 	except Exception as e:
 		return jsonify({'mensaje': str(e)}), CODIGO_HTTP["BAD_REQUEST"]
@@ -98,3 +98,9 @@ def data_diaria():
 @tickets.route('/tickets/data_acumulada', methods=['GET'])
 def data_acumulada():
 	return jsonify(obtener_data_acumulada())
+
+
+@tickets.route('/tickets/tareas/<int:id_tarea>', methods=['DELETE'])
+def eliminar_asociaciones_ticket(id_tarea):
+	eliminar_asociaciones(id_tarea)
+	return jsonify({'mensaje': 'Tickets desasociados con exito'}), CODIGO_HTTP["OK"]

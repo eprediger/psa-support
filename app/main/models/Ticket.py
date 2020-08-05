@@ -62,10 +62,13 @@ class Ticket(db.Model):
         tareas = []
         if incluir_tareas and self.tareas:
             for tarea in self.tareas:
-                url = URL_PROYECTOS + f'/proyectos/{tarea.id_proyecto}/tareas/{tarea.id_tarea}'
-                r = requests.get(url)
-                json = r.json()
-                tareas.append({'id_tarea': json['id'], 'nombre': json['nombre'], 'id_proyecto': tarea.id_proyecto})
+                try:
+                    url = URL_PROYECTOS + f'/proyectos/{tarea.id_proyecto}/tareas/{tarea.id_tarea}'
+                    r = requests.get(url)
+                    json = r.json()
+                    tareas.append({'id_tarea': json['id'], 'nombre': json['nombre'], 'id_proyecto': tarea.id_proyecto})
+                except:
+                    tareas = []
 
         d = {
             'id': self.id,
