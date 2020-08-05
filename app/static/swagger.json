@@ -226,7 +226,7 @@
       "/clientes": {
         "get": {
           "tags": [
-            "Clients"
+            "Clientes"
           ],
           "summary": "Retorna todos los clientes",
           "responses": {
@@ -240,7 +240,7 @@
         },
         "post": {
           "tags": [
-            "Clients"
+            "Clientes"
           ],
           "summary": "Crear un nuevo cliente",
           "requestBody": {
@@ -282,7 +282,7 @@
         ],
         "get": {
           "tags": [
-            "Clients"
+            "Clientes"
           ],
           "summary": "Obtener toda la información de un cliente",
           "parameters": [
@@ -311,7 +311,7 @@
         "put": {
           "summary": "Editar un cliente por ID",
           "tags": [
-            "Clients"
+            "Clientes"
           ],
           "parameters": [
             {
