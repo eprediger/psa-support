@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "Documentación de la API del módulo de Soporte de PSA",
+    "description": "Documentación de la API del módulo de Soporte de PSA url: [https://psa-api-support.herokuapp.com/swagger](https://psa-api-support.herokuapp.com/swagger)",
     "version": "1.0.0",
     "title": "PSA - Soporte"
   },
