@@ -179,29 +179,45 @@ def obtener_data_diaria():
 
 	return tickets_cerrados, tickets_abiertos
 
+# def obtener_data_acumulada():
+# 	fechas_altas_tickets = Ticket.query.\
+# 							with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).\
+# 							distinct().\
+# 							order_by(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).all()
+# 	acumulado_tickets_creados = []
+
+# 	for fecha in fechas_altas_tickets:
+# 		fecha_max = datetime.strptime(fecha[0], "%Y-%m-%d")
+# 		fecha_max = fecha_max + timedelta(days=1)
+# 		cantidad_tickets = Ticket.query.\
+# 							with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).\
+# 							filter(Ticket.fecha_creacion < fecha_max).first()
+# 		acumulado_tickets_creados.append({'fecha':fecha[0], 'cantidad': cantidad_tickets[1]})
+
+# 	acumulado_tickets_creados = completar_ceros(acumulado_tickets_creados)
+
+# 	if len(acumulado_tickets_creados) > 0:
+# 		acumulado_dia_anterior = acumulado_tickets_creados[0]["cantidad"]
+# 		for fecha in acumulado_tickets_creados:
+# 			if fecha["cantidad"] == 0:
+# 				fecha["cantidad"] = acumulado_dia_anterior
+# 			else:
+# 				acumulado_dia_anterior = fecha["cantidad"]
+
+# 	return acumulado_tickets_creados
+
 def obtener_data_acumulada():
-	fechas_altas_tickets = Ticket.query.\
-							with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).\
-							distinct().\
-							order_by(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).all()
+	tickets_cerrados, tickets_abiertos = obtener_data_diaria()
 	acumulado_tickets_creados = []
-
-	for fecha in fechas_altas_tickets:
-		fecha_max = datetime.strptime(fecha[0], "%Y-%m-%d")
-		fecha_max = fecha_max + timedelta(days=1)
-		cantidad_tickets = Ticket.query.\
-							with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).\
-							filter(Ticket.fecha_creacion < fecha_max).first()
-		acumulado_tickets_creados.append({'fecha':fecha[0], 'cantidad': cantidad_tickets[1]})
-
-	acumulado_tickets_creados = completar_ceros(acumulado_tickets_creados)
-
-	if len(acumulado_tickets_creados) > 0:
-		acumulado_dia_anterior = acumulado_tickets_creados[0]["cantidad"]
-		for fecha in acumulado_tickets_creados:
-			if fecha["cantidad"] == 0:
-				fecha["cantidad"] = acumulado_dia_anterior
-			else:
-				acumulado_dia_anterior = fecha["cantidad"]
-
+	acumulado = 0
+	for ticket in tickets_abiertos:
+		sumar = ticket["cantidad"]
+		restar = 0
+		for cerrado in tickets_cerrados:
+			if cerrado["fecha"] == ticket["fecha"]:
+				restar = cerrado["cantidad"]
+		
+		acumulado = acumulado + sumar - restar
+		acumulado_tickets_creados.append({"fecha":ticket["fecha"],"cantidad":acumulado})
+	
 	return acumulado_tickets_creados
