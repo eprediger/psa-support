@@ -74,20 +74,12 @@
             "name": "id",
             "required": true,
             "description": "Id del ticket",
-            "schema": {
-              "$ref": "#/components/schemas/id_ticket"
-            }
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Failed. Misunderstood Request."
-          },
-          "404": {
-            "description": "Failed. Ticket request not found."
           }
         }
       },
@@ -151,6 +143,36 @@
           },
           "400": {
             "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/tickets/tareas/{id}": {
+      "delete": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Eliminar la relacion de la tarea con todos sus tickets",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Id de tarea",
+            "schema": {
+              "$ref": "#/components/schemas/id_ticket"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Misunderstood Request."
+          },
+          "404": {
+            "description": "Failed. Ticket request not found."
           }
         }
       }
