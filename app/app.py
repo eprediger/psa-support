@@ -31,7 +31,9 @@ def create_app(env):
         > from main.db.database import db
         > db.create_all()
         """
-        #db.create_all()
+        if not db.engine.dialect.has_table(db.engine, "clientes"):
+            print("HOlis")
+            db.create_all()
 
     return app
 
