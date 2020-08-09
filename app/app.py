@@ -18,14 +18,23 @@ def create_app(env):
     app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
     app.register_blueprint(tickets)
     app.register_blueprint(clientes)
-    
-    dbCreada = False
-    
+
     with app.app_context():
-        if(not dbCreada):
-            db.init_app(app)
+        db.init_app(app)
+        """
+        TEORIA:
+        - Heroku apaga el proceso por inactividad.
+         Al invocar un servicio, se ejecuta este método, crea tablas que ya existen y pincha.
+
+        Si se borra la base:
+        heroku run python
+        > from main.db.database import db
+        > db.create_all()
+        """
+        if not db.engine.has_table('clientes'):
+            
+            print("HOlis")
             db.create_all()
-            dbCreada = True
 
     return app
 
