@@ -18,9 +18,14 @@ def create_app(env):
     app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
     app.register_blueprint(tickets)
     app.register_blueprint(clientes)
-
+    
+    dbCreada = False
+    
     with app.app_context():
-        db.init_app(app)
+        if(not dbCreada):
+            db.init_app(app)
+            db.create_all()
+            dbCreada = True
 
     return app
 
