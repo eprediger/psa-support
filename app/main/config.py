@@ -1,4 +1,5 @@
 from decouple import config
+from main.db.database import db
 
 
 class Config:
