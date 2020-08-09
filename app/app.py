@@ -20,7 +20,7 @@ def create_app(env):
     app.register_blueprint(clientes)
 
     with app.app_context():
-        db.init_app(app)
+#        db.init_app(app)
         """
         TEORIA:
         - Heroku apaga el proceso por inactividad.
@@ -34,7 +34,7 @@ def create_app(env):
         if not db.engine.has_table('clientes'):
             
             print("HOlis")
-            db.create_all()
+#            db.create_all()
 
     return app
 
