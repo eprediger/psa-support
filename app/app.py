@@ -7,6 +7,8 @@ from main.settings import SWAGGER_URL, SWAGGERUI_BLUEPRINT
 from decouple import config as config_decouple
 from flask import Flask
 from flask_cors import CORS
+from flask_migrate import Migrate
+from sqlalchemy_utils import create_database, database_exists
 
 
 def create_app(env):
@@ -21,18 +23,10 @@ def create_app(env):
 
     with app.app_context():
         db.init_app(app)
-        """
-        TEORIA:
-        - Heroku apaga el proceso por inactividad.
-         Al invocar un servicio, se ejecuta este método, crea tablas que ya existen y pincha.
 
-        Si se borra la base:
-        heroku run python
-        > from main.db.database import db
-        > db.create_all()
-        """
-        if not db.engine.dialect.has_table(db.engine, "clientes"):
-            print("HOlis")
+        if not database_exists(env.SQLALCHEMY_DATABASE_URI):
+            print("Creando la base por unica vez")
+            create_database(env.SQLALCHEMY_DATABASE_URI)
             db.create_all()
 
     return app
