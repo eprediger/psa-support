@@ -19,6 +19,9 @@ def create_app(env):
     app.register_blueprint(tickets)
     app.register_blueprint(clientes)
 
+    with app.app_context():
+        db.init_app(app)
+
     return app
 
 environment = config['development']
