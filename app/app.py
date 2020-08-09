@@ -9,6 +9,14 @@ from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
 
+import click
+from flask_cli import with_appcontext
+
+@click.command(name='create_tables')
+@with_appcontext
+def create_tables():
+    db.create_all()
+
 
 def create_app(env):
     app = Flask(__name__)
