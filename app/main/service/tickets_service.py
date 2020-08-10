@@ -146,10 +146,7 @@ def archivar(id):
 
 def completar_ceros(tickets):
 	if len(tickets) > 0:
-		stringFechaInicio = tickets[0]["fecha"]
-		anio, mes, dia = stringFechaInicio.split("-")
-
-		fechaInicio = date(int(anio), int(mes), int(dia))
+		fechaInicio = tickets[0]["fecha"]
 		fechaFin = date.today()
 		delta = fechaFin - fechaInicio
 
