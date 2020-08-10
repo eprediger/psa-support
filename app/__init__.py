@@ -26,7 +26,7 @@ def create_app(env):
 
     return app
 
-environment = config['production']
+environment = config['development']
 if config_decouple('PRODUCTION', default=False):
     print("LALAL produccion")
     environment = config['production']

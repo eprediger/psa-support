@@ -7,13 +7,13 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-#    SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class FeatureTestingConfig(Config):
     DEBUG = True
-#    SQLALCHEMY_DATABASE_URI = 'sqlite:///'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 

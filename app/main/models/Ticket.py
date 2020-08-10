@@ -14,12 +14,12 @@ class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(150), nullable=True)
     descripcion = db.Column(db.String(300), nullable=True)
-    tipo = db.Column(db.Enum('error', 'consulta', 'mejora'),
+    tipo = db.Column(db.Enum('error', 'consulta', 'mejora', name="enumTipo"),
                      nullable=False)
     estado = db.Column(db.Enum('nuevo', 'en progreso', 'esperando informacion',
-                               'cerrado'), nullable=False,
+                               'cerrado', name="enumEstado"), nullable=False,
                                default='nuevo')
-    severidad = db.Column(db.Enum('baja', 'media', 'alta'),
+    severidad = db.Column(db.Enum('baja', 'media', 'alta', name="enumSeveridad"),
                           nullable=True)
     legajo_responsable = db.Column(db.Integer, nullable=True)
     pasos = db.Column(db.String(300), nullable=True, default='')

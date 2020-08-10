@@ -1,8 +1,8 @@
-"""empty message
+"""cambio en enums
 
-Revision ID: f18ead841366
+Revision ID: e1ae6652f2b4
 Revises: 
-Create Date: 2020-08-09 22:52:33.996714
+Create Date: 2020-08-10 00:16:18.252775
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f18ead841366'
+revision = 'e1ae6652f2b4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,16 +24,16 @@ def upgrade():
     sa.Column('CUIT', sa.String(length=300), nullable=False),
     sa.Column('descripcion', sa.String(length=300), nullable=False),
     sa.Column('fecha_desde_que_es_cliente', sa.DateTime(timezone=True), nullable=True),
-    sa.Column('estado', sa.Enum('activo', 'inactivo'), nullable=False),
+    sa.Column('estado', sa.Enum('activo', 'inactivo', name='enumEstado'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('tickets',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nombre', sa.String(length=150), nullable=True),
     sa.Column('descripcion', sa.String(length=300), nullable=True),
-    sa.Column('tipo', sa.Enum('error', 'consulta', 'mejora'), nullable=False),
-    sa.Column('estado', sa.Enum('nuevo', 'en progreso', 'esperando informacion', 'cerrado'), nullable=False),
-    sa.Column('severidad', sa.Enum('baja', 'media', 'alta'), nullable=True),
+    sa.Column('tipo', sa.Enum('error', 'consulta', 'mejora', name='enumTipo'), nullable=False),
+    sa.Column('estado', sa.Enum('nuevo', 'en progreso', 'esperando informacion', 'cerrado', name='enumEstado'), nullable=False),
+    sa.Column('severidad', sa.Enum('baja', 'media', 'alta', name='enumSeveridad'), nullable=True),
     sa.Column('legajo_responsable', sa.Integer(), nullable=True),
     sa.Column('pasos', sa.String(length=300), nullable=True),
     sa.Column('fecha_creacion', sa.DateTime(timezone=True), nullable=True),
