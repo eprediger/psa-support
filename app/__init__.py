@@ -28,7 +28,10 @@ def create_app(env):
 
 environment = config['development']
 if config_decouple('PRODUCTION', default=False):
+    print("LALAL produccion")
     enviroment = config['production']
+else:
+    print("la connn!!")
 
 app = create_app(environment)
 
