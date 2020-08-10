@@ -145,26 +145,18 @@ def archivar(id):
 	eliminar_instancia(Ticket, id=id)
 
 def completar_ceros(tickets):
-	print(tickets)
-
 	if len(tickets) > 0:
 		fechaInicio = tickets[0]["fecha"]
 		fechaFin = date.today()
 		delta = fechaFin - fechaInicio
 
-		print(fechaInicio)
-		print(fechaFin)
-
 		for i in range(delta.days + 1):
 			dia = fechaInicio + timedelta(days=i)
-			print(dia)
-			diaString = dia.strftime("%Y-%m-%d")
-			print(diaString)
-			if diaString not in [ ticket['fecha'] for ticket in tickets ]:
-				tickets.append({'fecha': diaString, 'cantidad': 0})
+			if dia not in [ ticket['fecha'] for ticket in tickets ]:
+				tickets.append({'fecha': dia, 'cantidad': 0})
 
-		print(tickets)
 		tickets.sort(key=lambda x: x["fecha"])
+		tickets = [{'fecha': ticket['fecha'].strftime("%Y-%m-%d"), 'cantidad': ticket['cantidad']} for ticket in tickets]
 
 	return tickets
 
