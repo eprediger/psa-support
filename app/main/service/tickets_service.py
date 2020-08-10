@@ -148,7 +148,10 @@ def completar_ceros(tickets):
 	if len(tickets) > 0:
 		stringFechaInicio = tickets[0]["fecha"]
 		anio, mes, dia = stringFechaInicio.split("-")
-
+		print(stringFechaInicio)
+		print(anio)
+		print(mes)
+		print(dia)
 		fechaInicio = date(int(anio), int(mes), int(dia))
 		fechaFin = date.today()
 		delta = fechaFin - fechaInicio
