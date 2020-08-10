@@ -165,15 +165,15 @@ def completar_ceros(tickets):
 
 def obtener_data_diaria():
 	tickets_cerrados = Ticket.query.\
-						with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_finalizacion), func.count(Ticket.id)).\
+						with_entities(func.to_char(Ticket.fecha_finalizacion, "%Y-%m-%d" ), func.count(Ticket.id)).\
 						filter(Ticket.fecha_finalizacion!=None)\
-						.group_by(func.strftime("%Y-%m-%d", Ticket.fecha_finalizacion)).all()
+						.group_by(func.to_char(Ticket.fecha_finalizacion, "%Y-%m-%d")).all()
 	tickets_cerrados = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_cerrados]
 	tickets_cerrados = completar_ceros(tickets_cerrados)
 
 	tickets_abiertos = Ticket.query.\
-						with_entities(func.strftime("%Y-%m-%d", Ticket.fecha_creacion), func.count(Ticket.id)).\
-						group_by(func.strftime("%Y-%m-%d", Ticket.fecha_creacion)).all()
+						with_entities(func.to_char( Ticket.fecha_creacion, "%Y-%m-%d"), func.count(Ticket.id)).\
+						group_by(func.to_char(Ticket.fecha_creacion, "%Y-%m-%d")).all()
 	tickets_abiertos = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_abiertos]
 	tickets_abiertos = completar_ceros(tickets_abiertos)
 
