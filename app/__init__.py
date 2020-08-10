@@ -26,12 +26,12 @@ def create_app(env):
 
     return app
 
-environment = config['development']
+environment = config['production']
 if config_decouple('PRODUCTION', default=False):
     print("LALAL produccion")
-    enviroment = config['production']
+    environment = config['production']
     print("La variable de la base eeess:::")
-    print(enviroment.SQLALCHEMY_DATABASE_URI)
+    print(environment.SQLALCHEMY_DATABASE_URI)
     print("")
 else:
     print("la connn!!")
