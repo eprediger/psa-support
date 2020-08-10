@@ -3,13 +3,13 @@ from pytz import timezone
 from random import randint, uniform,random
 from sqlalchemy import func
 
-from main.db.database import (agregar_instancia, editar_instancia,
+from app.main.db.database import (agregar_instancia, editar_instancia,
                               eliminar_instancia,
                               obtener_instancias_por_filtro,
                               obtener_todas_las_instancias,
                               obtener_una_instancia)
-from main.models.Ticket import Ticket
-from main.settings import SEVERIDADES
+from app.main.models.Ticket import Ticket
+from app.main.settings import SEVERIDADES
 
 
 def obtener_tickets(query_params):

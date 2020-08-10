@@ -2,9 +2,9 @@
 from flask import jsonify, request
 from flask.blueprints import Blueprint
 
-from main.service.clientes_service import (obtener_clientes as obtener_clientes_service,
+from app.main.service.clientes_service import (obtener_clientes as obtener_clientes_service,
                                            crear, editar, obtener_cliente_por, eliminar)
-from main.settings import (CODIGO_HTTP)
+from app.main.settings import (CODIGO_HTTP)
 
 clientes = Blueprint('clientes', __name__)
 

@@ -1,8 +1,8 @@
-from main.db.database import (agregar_instancia, editar_instancia, eliminar_instancia,
+from app.main.db.database import (agregar_instancia, editar_instancia, eliminar_instancia,
                       obtener_instancias_por_filtro,
                       obtener_todas_las_instancias, obtener_una_instancia)
-from main.models.Cliente import Cliente
-from main.models.Ticket import Ticket
+from app.main.models.Cliente import Cliente
+from app.main.models.Ticket import Ticket
 
 from datetime import datetime, timedelta
 from pytz import timezone

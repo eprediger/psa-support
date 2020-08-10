@@ -1,8 +1,8 @@
 import requests
 
 from flask_sqlalchemy import SQLAlchemy
-from main.db.database import db, editar_instancia
-from main.settings import URL_PROYECTOS
+from app.main.db.database import db, editar_instancia
+from app.main.settings import URL_PROYECTOS
 
 class Ticket(db.Model):
     """

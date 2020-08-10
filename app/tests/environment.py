@@ -11,7 +11,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir) 
 
 from app import create_app
-from main.config import config
+from app.main.config import config
 
 
 @given(u'I am an Analista de mesa de ayuda')

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from behave import given, then, when
 
-from main.settings import SEVERIDADES
+from app.main.settings import SEVERIDADES
 
 
 @when(u'I create a ticket with nombre "{nombre}", descripcion "{descripcion}", tipo "{tipo}", severidad "{severidad}"')

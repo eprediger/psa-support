@@ -1,13 +1,13 @@
 from flask import jsonify, request
 from flask.blueprints import Blueprint
 
-from main.service.tareas_service import crear_tarea, eliminar_asociaciones
-from main.service.tickets_service import (archivar, crear, editar,
+from app.main.service.tareas_service import crear_tarea, eliminar_asociaciones
+from app.main.service.tickets_service import (archivar, crear, editar,
                                           obtener_ticket_por, obtener_data_diaria,
 										  obtener_data_acumulada)
-from main.service.tickets_service import \
+from app.main.service.tickets_service import \
     obtener_tickets as obtener_tickets_service
-from main.settings import CODIGO_HTTP
+from app.main.settings import CODIGO_HTTP
 
 tickets = Blueprint('tickets', __name__)
 

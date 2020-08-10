@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from behave import given, then, when
 
-from main.settings import SEVERIDADES
+from app.main.settings import SEVERIDADES
 
 cliente_creado = {
     'razon_social' : "razon social prueba",

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from behave import given, then, when
 
-from main.settings import SEVERIDADES
+from app.main.settings import SEVERIDADES
 
 ticket_crear = {
     'nombre': 'test',

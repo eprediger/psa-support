@@ -1,6 +1,6 @@
-from main.models.TicketTarea import TicketTarea
-from main.service.tickets_service import obtener_ticket_por
-from main.db.database import agregar_instancia, eliminar_instancias_filtradas
+from app.main.models.TicketTarea import TicketTarea
+from app.main.service.tickets_service import obtener_ticket_por
+from app.main.db.database import agregar_instancia, eliminar_instancias_filtradas
 
 def crear_tarea(tarea, id_ticket):
 	ticket = obtener_ticket_por(id=id_ticket)

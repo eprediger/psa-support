@@ -1,1 +1,2 @@
-web: gunicorn --chdir app app:app
+release: flask db upgrade
+web: gunicorn wsgi:app
