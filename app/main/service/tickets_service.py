@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, date
 from pytz import timezone
 from random import randint, uniform,random
-from sqlalchemy import func
+from sqlalchemy import func, cast, Date
 
 from app.main.db.database import (agregar_instancia, editar_instancia,
                               eliminar_instancia,
@@ -168,17 +168,20 @@ def completar_ceros(tickets):
 
 def obtener_data_diaria():
 	tickets_cerrados = Ticket.query.\
-						with_entities(func.to_char(Ticket.fecha_finalizacion, "%Y-%m-%d" ), func.count(Ticket.id)).\
+						with_entities(cast(Ticket.fecha_finalizacion, Date), func.count(Ticket.id)).\
 						filter(Ticket.fecha_finalizacion!=None)\
-						.group_by(func.to_char(Ticket.fecha_finalizacion, "%Y-%m-%d")).all()
+						.group_by(cast(Ticket.fecha_finalizacion, Date)).all()
+
+	distinct_dates = session.query(cast(Test_Table.test_time, Date)).distinct().all()
+
 	print(tickets_cerrados[0])
 	print(tickets_cerrados[3])
 	tickets_cerrados = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_cerrados]
 	tickets_cerrados = completar_ceros(tickets_cerrados)
 
 	tickets_abiertos = Ticket.query.\
-						with_entities(func.to_char( Ticket.fecha_creacion, "%Y-%m-%d"), func.count(Ticket.id)).\
-						group_by(func.to_char(Ticket.fecha_creacion, "%Y-%m-%d")).all()
+						with_entities(cast(Ticket.fecha_creacion, Date), func.count(Ticket.id)).\
+						group_by(cast(Ticket.fecha_creacion, Date)).all()
 	tickets_abiertos = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_abiertos]
 	tickets_abiertos = completar_ceros(tickets_abiertos)
 
