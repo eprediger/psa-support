@@ -1,8 +1,8 @@
-"""cambio en enums
+"""correccion de nombre de enums ticket
 
-Revision ID: e1ae6652f2b4
+Revision ID: 84f3e4232c77
 Revises: 
-Create Date: 2020-08-10 00:16:18.252775
+Create Date: 2020-08-10 00:42:20.221317
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e1ae6652f2b4'
+revision = '84f3e4232c77'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,7 +32,7 @@ def upgrade():
     sa.Column('nombre', sa.String(length=150), nullable=True),
     sa.Column('descripcion', sa.String(length=300), nullable=True),
     sa.Column('tipo', sa.Enum('error', 'consulta', 'mejora', name='enumTipo'), nullable=False),
-    sa.Column('estado', sa.Enum('nuevo', 'en progreso', 'esperando informacion', 'cerrado', name='enumEstado'), nullable=False),
+    sa.Column('estado', sa.Enum('nuevo', 'en progreso', 'esperando informacion', 'cerrado', name='enumEstadoTicket'), nullable=False),
     sa.Column('severidad', sa.Enum('baja', 'media', 'alta', name='enumSeveridad'), nullable=True),
     sa.Column('legajo_responsable', sa.Integer(), nullable=True),
     sa.Column('pasos', sa.String(length=300), nullable=True),

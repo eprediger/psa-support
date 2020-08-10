@@ -17,7 +17,7 @@ class Ticket(db.Model):
     tipo = db.Column(db.Enum('error', 'consulta', 'mejora', name="enumTipo"),
                      nullable=False)
     estado = db.Column(db.Enum('nuevo', 'en progreso', 'esperando informacion',
-                               'cerrado', name="enumEstado"), nullable=False,
+                               'cerrado', name="enumEstadoTicket"), nullable=False,
                                default='nuevo')
     severidad = db.Column(db.Enum('baja', 'media', 'alta', name="enumSeveridad"),
                           nullable=True)
