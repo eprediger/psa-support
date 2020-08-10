@@ -171,6 +171,8 @@ def obtener_data_diaria():
 						with_entities(func.to_char(Ticket.fecha_finalizacion, "%Y-%m-%d" ), func.count(Ticket.id)).\
 						filter(Ticket.fecha_finalizacion!=None)\
 						.group_by(func.to_char(Ticket.fecha_finalizacion, "%Y-%m-%d")).all()
+	print(tickets_cerrados[0])
+	print(tickets_cerrados[3])
 	tickets_cerrados = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_cerrados]
 	tickets_cerrados = completar_ceros(tickets_cerrados)
 
