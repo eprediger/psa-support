@@ -28,13 +28,7 @@ def create_app(env):
 
 environment = config['development']
 if config_decouple('PRODUCTION', default=False):
-    print("LALAL produccion")
     environment = config['production']
-    print("La variable de la base eeess:::")
-    print(environment.SQLALCHEMY_DATABASE_URI)
-    print("")
-else:
-    print("la connn!!")
 
 app = create_app(environment)
 

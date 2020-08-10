@@ -3,7 +3,7 @@ from pytz import timezone
 from random import randint, uniform,random
 from sqlalchemy import func, cast, Date
 
-from app.main.db.database import (agregar_instancia, editar_instancia,
+from app.main.db.database import (db, agregar_instancia, editar_instancia,
                               eliminar_instancia,
                               obtener_instancias_por_filtro,
                               obtener_todas_las_instancias,
@@ -148,10 +148,7 @@ def completar_ceros(tickets):
 	if len(tickets) > 0:
 		stringFechaInicio = tickets[0]["fecha"]
 		anio, mes, dia = stringFechaInicio.split("-")
-		print(stringFechaInicio)
-		print(anio)
-		print(mes)
-		print(dia)
+
 		fechaInicio = date(int(anio), int(mes), int(dia))
 		fechaFin = date.today()
 		delta = fechaFin - fechaInicio
@@ -167,21 +164,21 @@ def completar_ceros(tickets):
 	return tickets
 
 def obtener_data_diaria():
-	tickets_cerrados = Ticket.query.\
-						with_entities(cast(Ticket.fecha_finalizacion, Date), func.count(Ticket.id)).\
-						filter(Ticket.fecha_finalizacion!=None)\
-						.group_by(cast(Ticket.fecha_finalizacion, Date)).all()
+	query = """SELECT date(fecha_finalizacion), count(*)
+			FROM tickets
+			WHERE date(fecha_finalizacion) is not null
+			GROUP BY date(fecha_finalizacion);"""
 
-	distinct_dates = session.query(cast(Test_Table.test_time, Date)).distinct().all()
-
-	print(tickets_cerrados[0])
-	print(tickets_cerrados[3])
+	tickets_cerrados = db.engine.execute(query)
 	tickets_cerrados = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_cerrados]
 	tickets_cerrados = completar_ceros(tickets_cerrados)
 
-	tickets_abiertos = Ticket.query.\
-						with_entities(cast(Ticket.fecha_creacion, Date), func.count(Ticket.id)).\
-						group_by(cast(Ticket.fecha_creacion, Date)).all()
+
+	query = """SELECT date(fecha_creacion), count(*)
+			FROM tickets
+			WHERE date(fecha_creacion) is not null
+			GROUP BY date(fecha_creacion);"""
+	tickets_abiertos = db.engine.execute(query)
 	tickets_abiertos = [{'fecha': tc[0], 'cantidad': tc[1]} for tc in tickets_abiertos]
 	tickets_abiertos = completar_ceros(tickets_abiertos)
 
@@ -197,8 +194,8 @@ def obtener_data_acumulada():
 		for cerrado in tickets_cerrados:
 			if cerrado["fecha"] == ticket["fecha"]:
 				restar = cerrado["cantidad"]
-		
+
 		acumulado = acumulado + sumar - restar
 		acumulado_tickets_creados.append({"fecha":ticket["fecha"],"cantidad":acumulado})
-	
+
 	return acumulado_tickets_creados
