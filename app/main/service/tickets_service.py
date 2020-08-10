@@ -153,7 +153,7 @@ def completar_ceros(tickets):
 		for i in range(delta.days + 1):
 			dia = fechaInicio + timedelta(days=i)
 			diaString = dia.strftime("%Y-%m-%d")
-			if diaString not in [ ticket['fecha'] for ticket in tickets ]:
+			if diaString not in [ ticket['fecha'].strftime("%Y-%m-%d") for ticket in tickets ]:
 				tickets.append({'fecha': diaString, 'cantidad': 0})
 
 		tickets.sort(key=lambda x: x["fecha"])
